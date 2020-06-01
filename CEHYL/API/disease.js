@@ -9,7 +9,7 @@ export const resource_id = 'ef7e44f1-9b14-4680-a60a-37d2c9dda390';
 // For week filtering, add on to the defaultData's object
 // {...defaultData, filters: '{"epi_week": "2020-W07"}'}
 export const defaultData = {
-  sort: 'epi_week desc',
+  sort: 'epi_week desc, no._of_cases desc',
   fields: 'epi_week,disease,no._of_cases',
 };
 
@@ -40,7 +40,7 @@ export const formatURL = (data, keyList, resource_id) => {
 // e.g. 2020-W07
 // Returns a Promise
 export const getEpiWeek = async epi_week => {
-  const data = {...defaultData, filters: `{"epi_week": ${epi_week}}`};
+  const data = {...defaultData, filters: `{"epi_week": "${epi_week}"}`};
   const keyList = [...Object.keys(data)];
   const url = formatURL(data, keyList, resource_id);
   return await getResponse(url).then(response => filterEmptyResults(response));

@@ -3,7 +3,6 @@ import { Text, View } from 'react-native';
 
 
 export const DiseaseTab = (props) => {
-    console.log(props.dateRange + "hihi")
     return(
         <View>
             <Text>{props.dateRange}</Text>
