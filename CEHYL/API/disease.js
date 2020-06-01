@@ -36,6 +36,50 @@ export const formatURL = (data, keyList, resource_id) => {
   return url;
 };
 
+// epi_week is in form: YYYY-W** (** is the 2 digit week number)
+// e.g. 2020-W07
+// Returns a Promise
+export const getEpiWeek = async epi_week => {
+  const data = {...defaultData, filters: `{"epi_week": ${epi_week}}`};
+  const keyList = [...Object.keys(data)];
+  const url = formatURL(data, keyList, resource_id);
+  return await getResponse(url).then(response => filterEmptyResults(response));
+};
+
+// Returns a Promise containing the latest Epi_Week in format YYYY-W** (** is the 2 digit week number)
+export async function getLatestEpiWeekNum() {
+  const data = {...defaultData, limit: 1};
+  const keyList = [...Object.keys(data)];
+  const url = formatURL(data, keyList, resource_id);
+  return await getResponse(url).then(data => {
+    return data['result']['records']['0']['epi_week'];
+  });
+}
+
+// epi_week is in form: YYYY-W** (** is the 2 digit week number)
+// e.g. 2020-W04
+// Returns a list of strings representing the previous 4 weeks, inclusive of given epi_week
+export const getPreviousFourWeeks = epi_week => {
+  let [year, week] = epi_week.split('-');
+  week = parseInt(week.substring(1));
+  let epi_weeks = [epi_week];
+
+  let counterYear = parseInt(year);
+  let counterWeek = week;
+  for (let i = 0; i < 3; i++) {
+    counterWeek--;
+    if (counterWeek == 0) {
+      counterWeek = 52;
+      counterYear--;
+    }
+
+    epi_weeks.push(
+      `${counterYear}-W${counterWeek <= 9 ? '0' + counterWeek : counterWeek}`,
+    );
+  }
+  return epi_weeks;
+};
+
 // Returns a Promise with data based on given url query
 export const getResponse = url => {
   return fetch(url, {
