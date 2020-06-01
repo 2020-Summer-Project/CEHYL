@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthProvider from './providers/authprovider';
-import HomeScreen from './screens/home';
 import SignInScreen from './screens/signin';
+import DiseaseScreen from './screens/disease';
 import SignUpScreen from './screens/signup';
 import ProfileScreen from './screens/profile';
 import ResetPasswordScreen from './screens/reset';
@@ -69,7 +69,7 @@ export default function App({navigation}) {
   function mainPageTab() {
     return (
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" component={DiseaseScreen} />
         <Tab.Screen name="Settings" component={ProfileScreen} />
       </Tab.Navigator>
     );
