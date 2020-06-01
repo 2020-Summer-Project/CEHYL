@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { Text, View } from 'react-native';
 
 
 export const DiseaseTab = (props) => {
