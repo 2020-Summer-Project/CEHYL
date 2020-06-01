@@ -5,6 +5,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import AuthProvider from './providers/authprovider';
 import HomeScreen from './screens/home';
 import SignInScreen from './screens/signin';
+import SignUpScreen from './screens/signup';
+import ResetPasswordScreen from './screens/reset';
 
 export default function App({navigation}) {
   const Stack = createStackNavigator();
@@ -65,7 +67,20 @@ export default function App({navigation}) {
       <AuthProvider dispatch={dispatch}>
         <Stack.Navigator>
           {state.userToken == null ? (
-            <Stack.Screen name="SignIn" component={SignInScreen} />
+            <>
+              <Stack.Screen
+                name="SignIn"
+                component={SignInScreen}
+                options={{
+                  title: 'Sign In',
+                }}
+              />
+              <Stack.Screen name="SignUp" component={SignUpScreen} />
+              <Stack.Screen
+                name="ResetPassword"
+                component={ResetPasswordScreen}
+              />
+            </>
           ) : (
             <Stack.Screen name="Home" component={HomeScreen} />
           )}

@@ -8,7 +8,7 @@ function HomeScreen({navigation}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Home Screen</Text>
-      <Button title="Go back to Sign in" onPress={() => signOut()} />
+      <Button title="Go back to Sign In" onPress={() => signOut()} />
     </View>
   );
 }
