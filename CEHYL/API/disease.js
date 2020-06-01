@@ -9,7 +9,7 @@ export const resource_id = 'ef7e44f1-9b14-4680-a60a-37d2c9dda390';
 // For week filtering, add on to the defaultData's object
 // {...defaultData, filters: '{"epi_week": "2020-W07"}'}
 export const defaultData = {
-  sort: 'epi_week desc',
+  sort: 'epi_week desc, no._of_cases desc',
   fields: 'epi_week,disease,no._of_cases',
 };
 
@@ -40,7 +40,7 @@ export const formatURL = (data, keyList, resource_id) => {
 // e.g. 2020-W07
 // Returns a Promise
 export const getEpiWeek = async epi_week => {
-  const data = {...defaultData, filters: `{"epi_week": ${epi_week}}`};
+  const data = {...defaultData, filters: `{"epi_week": "${epi_week}"}`};
   const keyList = [...Object.keys(data)];
   const url = formatURL(data, keyList, resource_id);
   return await getResponse(url).then(response => filterEmptyResults(response));
@@ -91,4 +91,33 @@ export const getResponse = url => {
   })
     .then(response => response.json())
     .catch(err => console.log(err));
+};
+
+/*
+Author: Venugopal46
+Taken from https://codepen.io/Venugopal46/pen/WrxdLY
+Calculates week range by giving a ISO Week number.
+*/
+// Returns the ISO week of the date.
+Date.prototype.getWeek = function() {
+  var date = new Date(this.getTime());
+  date.setHours(0, 0, 0, 0);
+  // Thursday in current week decides the year.
+  date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+  // January 4 is always in week 1.
+  var week1 = new Date(date.getFullYear(), 0, 4);
+  // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+  return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+}
+
+export const getDateRangeOfWeek = (weekNo, y) => {
+    var d1, numOfdaysPastSinceLastMonday, rangeIsFrom, rangeIsTo;
+    d1 = new Date(''+y+'');
+    numOfdaysPastSinceLastMonday = d1.getDay() - 1;
+    d1.setDate(d1.getDate() - numOfdaysPastSinceLastMonday);
+    d1.setDate(d1.getDate() + (7 * (weekNo - d1.getWeek())));
+    rangeIsFrom = d1.getDate() + "-" + (d1.getMonth() + 1) + "-" + + d1.getFullYear();
+    d1.setDate(d1.getDate() + 6);
+    rangeIsTo = d1.getDate() + "-" + (d1.getMonth() + 1) + "-" + d1.getFullYear() ;
+    return rangeIsFrom + " to " + rangeIsTo;
 };

@@ -5,6 +5,7 @@ import Card from '../components/card';
 export const DiseaseTab = (props) => {
     return(
         <View>
+            <Text>{props.dateRange}</Text>
             <View style={styles.headerStyle}>
                 <Text style={styles.header}>Disease Name</Text>
                 <Text style={styles.header}>Number of occurence</Text>
