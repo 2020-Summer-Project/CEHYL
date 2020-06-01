@@ -4,12 +4,16 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthProvider from './providers/authprovider';
 import SignInScreen from './screens/signin';
-import DiseaseScreen from './screens/disease'
+import DiseaseScreen from './screens/disease';
 import SignUpScreen from './screens/signup';
+import ProfileScreen from './screens/profile';
 import ResetPasswordScreen from './screens/reset';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import TabStack from './screens/disease';
 
 export default function App({navigation}) {
   const Stack = createStackNavigator();
+  const Tab = createBottomTabNavigator();
 
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
@@ -62,6 +66,15 @@ export default function App({navigation}) {
     bootstrapAsync();
   }, []);
 
+  function mainPageTab() {
+    return (
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={DiseaseScreen} />
+        <Tab.Screen name="Settings" component={ProfileScreen} />
+      </Tab.Navigator>
+    );
+  }
+
   return (
     <NavigationContainer>
       <AuthProvider dispatch={dispatch}>
@@ -82,7 +95,7 @@ export default function App({navigation}) {
               />
             </>
           ) : (
-            <Stack.Screen name="Home" component={DiseaseScreen} />
+            <Stack.Screen name="TrackMyHealth" component={mainPageTab} />
           )}
         </Stack.Navigator>
       </AuthProvider>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {DiseaseTab} from '../components/diseasetab';
 
 import * as DiseaseAPI from '../API/disease';

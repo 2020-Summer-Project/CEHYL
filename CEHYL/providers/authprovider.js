@@ -18,7 +18,7 @@ const AuthProvider = ({children, dispatch}) => {
           var user = firebase.auth().currentUser;
           if (user) {
             // User is signed in.
-            dispatch({type: 'SIGN_IN', token: user});
+            dispatch({type: 'SIGN_IN', token: user.uid});
           }
         } catch (error) {
           console.log(error.toString());
@@ -34,15 +34,22 @@ const AuthProvider = ({children, dispatch}) => {
             .auth()
             .createUserWithEmailAndPassword(data.email, data.password);
           const alert = Alert.alert('You have successfully signed up.');
-
           console.log('Account created');
           var user = firebase.auth().currentUser;
           if (user) {
             // User is signed in.
-            dispatch({type: 'SIGN_IN', token: user});
+            firebase
+              .database()
+              .ref('users/' + user.uid)
+              .set({
+                email: data.email,
+                name: data.name,
+                gender: data.gender,
+                age: data.age,
+              });
+            dispatch({type: 'SIGN_IN', token: user.uid});
           }
         } catch (error) {
-          console.log(error.toString());
           const alert = Alert.alert(
             'The email has been taken. Please use another email for sign-up.',
           );

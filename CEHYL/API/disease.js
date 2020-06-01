@@ -119,5 +119,5 @@ export const getDateRangeOfWeek = (weekNo, y) => {
     rangeIsFrom = d1.getDate() + "-" + (d1.getMonth() + 1) + "-" + + d1.getFullYear();
     d1.setDate(d1.getDate() + 6);
     rangeIsTo = d1.getDate() + "-" + (d1.getMonth() + 1) + "-" + d1.getFullYear() ;
-    return rangeIsFrom + " to " + range`IsTo;
+    return rangeIsFrom + " to " + rangeIsTo;
 };
