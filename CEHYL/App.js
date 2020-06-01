@@ -6,11 +6,14 @@ import AuthProvider from './providers/authprovider';
 import HomeScreen from './screens/home';
 import SignInScreen from './screens/signin';
 import SignUpScreen from './screens/signup';
+import ProfileScreen from './screens/profile';
 import ResetPasswordScreen from './screens/reset';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TabStack from './screens/disease';
 
 export default function App({navigation}) {
   const Stack = createStackNavigator();
+  const Tab = createBottomTabNavigator();
 
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
@@ -63,6 +66,15 @@ export default function App({navigation}) {
     bootstrapAsync();
   }, []);
 
+  function mainPageTab() {
+    return (
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Settings" component={ProfileScreen} />
+      </Tab.Navigator>
+    );
+  }
+
   return (
     <NavigationContainer>
       <AuthProvider dispatch={dispatch}>
@@ -83,7 +95,7 @@ export default function App({navigation}) {
               />
             </>
           ) : (
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="TrackMyHealth" component={mainPageTab} />
           )}
         </Stack.Navigator>
       </AuthProvider>
