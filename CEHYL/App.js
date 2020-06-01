@@ -7,6 +7,7 @@ import HomeScreen from './screens/home';
 import SignInScreen from './screens/signin';
 import SignUpScreen from './screens/signup';
 import ResetPasswordScreen from './screens/reset';
+import TabStack from './screens/disease';
 
 export default function App({navigation}) {
   const Stack = createStackNavigator();
