@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import AuthProvider from './providers/authprovider';
 import HomeScreen from './screens/home';
 import SignInScreen from './screens/signin';
-import TabStack from './screens/disease'
+import DiseaseScreen from './screens/disease'
 
 export default function App({navigation}) {
   const Stack = createStackNavigator();
@@ -68,7 +68,7 @@ export default function App({navigation}) {
           {state.userToken == null ? (
             <Stack.Screen name="SignIn" component={SignInScreen} />
           ) : (
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Home" component={DiseaseScreen} />
           )}
         </Stack.Navigator>
       </AuthProvider>
