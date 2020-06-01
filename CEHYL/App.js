@@ -3,11 +3,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthProvider from './providers/authprovider';
-import HomeScreen from './screens/home';
 import SignInScreen from './screens/signin';
+import DiseaseScreen from './screens/disease'
 import SignUpScreen from './screens/signup';
 import ResetPasswordScreen from './screens/reset';
-import TabStack from './screens/disease';
 
 export default function App({navigation}) {
   const Stack = createStackNavigator();
@@ -83,7 +82,7 @@ export default function App({navigation}) {
               />
             </>
           ) : (
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Home" component={DiseaseScreen} />
           )}
         </Stack.Navigator>
       </AuthProvider>
