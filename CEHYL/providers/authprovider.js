@@ -1,5 +1,8 @@
 import React, {createContext} from 'react';
 import dispatch from '../App';
+import firebase from '../Firebase';
+import {Alert} from 'react-native';
+import {NavigationHelpersContext} from '@react-navigation/native';
 
 export const AuthContext = createContext();
 
@@ -7,21 +10,43 @@ const AuthProvider = ({children, dispatch}) => {
   const authContext = React.useMemo(
     () => ({
       signIn: async data => {
-        // In a production app, we need to send some data (usually username, password) to server and get a token
-        // We will also need to handle errors if sign in failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
-
-        dispatch({type: 'SIGN_IN', token: 'dummy-auth-token'});
+        try {
+          await firebase
+            .auth()
+            .signInWithEmailAndPassword(data.email, data.password);
+          console.log('Account signed in');
+          var user = firebase.auth().currentUser;
+          if (user) {
+            // User is signed in.
+            dispatch({type: 'SIGN_IN', token: user});
+          }
+        } catch (error) {
+          console.log(error.toString());
+          const alert = Alert.alert(
+            'The username/password combination is invalid. Please try again.',
+          );
+        }
       },
       signOut: () => dispatch({type: 'SIGN_OUT'}),
       signUp: async data => {
-        // In a production app, we need to send user data to server and get a token
-        // We will also need to handle errors if sign up failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
+        try {
+          await firebase
+            .auth()
+            .createUserWithEmailAndPassword(data.email, data.password);
+          const alert = Alert.alert('You have successfully signed up.');
 
-        dispatch({type: 'SIGN_IN', token: 'dummy-auth-token'});
+          console.log('Account created');
+          var user = firebase.auth().currentUser;
+          if (user) {
+            // User is signed in.
+            dispatch({type: 'SIGN_IN', token: user});
+          }
+        } catch (error) {
+          console.log(error.toString());
+          const alert = Alert.alert(
+            'The email has been taken. Please use another email for sign-up.',
+          );
+        }
       },
     }),
     [],
