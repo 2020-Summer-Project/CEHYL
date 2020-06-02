@@ -101,7 +101,16 @@ export default function App({navigation}) {
               />
             </>
           ) : (
-            <Stack.Screen name="TrackMyHealth" component={mainPageTab} />
+            <Stack.Screen
+              name="TrackMyHealth"
+              component={mainPageTab}
+              options={{
+                title: 'TrackMyHealth',
+                headerTitleStyle: {
+                  textAlign: 'center',
+                },
+              }}
+            />
           )}
         </Stack.Navigator>
       </AuthProvider>
