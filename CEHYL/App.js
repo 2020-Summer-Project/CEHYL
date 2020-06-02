@@ -9,6 +9,7 @@ import SignUpScreen from './screens/signup';
 import ProfileScreen from './screens/profile';
 import ResetPasswordScreen from './screens/reset';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {MyTheme} from './theme/maintheme';
 import TabStack from './screens/disease';
 
 export default function App({navigation}) {
@@ -76,7 +77,7 @@ export default function App({navigation}) {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <AuthProvider dispatch={dispatch}>
         <Stack.Navigator>
           {state.userToken == null ? (
@@ -86,6 +87,9 @@ export default function App({navigation}) {
                 component={SignInScreen}
                 options={{
                   title: 'Sign In',
+                  headerTitleStyle: {
+                    textAlign: 'center',
+                  },
                 }}
               />
               <Stack.Screen name="SignUp" component={SignUpScreen} />

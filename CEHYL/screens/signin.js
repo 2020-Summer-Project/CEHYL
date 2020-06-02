@@ -1,7 +1,8 @@
 import React from 'react';
-import {Button, View, TextInput, Text} from 'react-native';
+import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {AuthContext} from '../providers/authprovider';
-import SignUpScreen from './signup';
+import {styles} from '../styles/signinstyle';
+import {MyTheme} from '../theme/maintheme';
 
 function SignInScreen({navigation}) {
   const [email, setEmail] = React.useState('');
@@ -10,23 +11,41 @@ function SignInScreen({navigation}) {
   const {signIn} = React.useContext(AuthContext);
 
   return (
-    <View>
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
+    <View style={styles.container}>
       <TextInput
+        style={styles.textInput}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        textContentType="emailAddress"
+        placeholderTextColor="white"
+      />
+      <TextInput
+        style={styles.textInput}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
+        textContentType="password"
+        placeholderTextColor="white"
         secureTextEntry
       />
-      <Button title="Sign In" onPress={() => signIn({email, password})} />
-      <Button
-        title="Register Here"
-        onPress={() => navigation.navigate('SignUp')}
-      />
-      <Button
-        title="Forgot your password? Reset it here."
-        onPress={() => navigation.navigate('ResetPassword')}
-      />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => signIn({email, password})}>
+        <Text style={styles.buttonText}>Sign In</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('SignUp')}>
+        <Text style={styles.buttonText}>Register Here</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('ResetPassword')}>
+        <Text style={styles.buttonText}>Reset password</Text>
+      </TouchableOpacity>
     </View>
   );
 }
