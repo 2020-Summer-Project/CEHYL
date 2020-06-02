@@ -10,7 +10,6 @@ import ProfileScreen from './screens/profile';
 import ResetPasswordScreen from './screens/reset';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MyTheme} from './theme/maintheme';
-import TabStack from './screens/disease';
 
 export default function App({navigation}) {
   const Stack = createStackNavigator();
