@@ -28,6 +28,7 @@ const AuthProvider = ({children, dispatch}) => {
         }
       },
       signOut: () => dispatch({type: 'SIGN_OUT'}),
+      reSignIn: () => dispatch({type: 'RE_SIGN_IN'}),
       signUp: async data => {
         try {
           await firebase

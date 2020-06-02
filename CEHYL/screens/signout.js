@@ -1,20 +1,16 @@
 import React from 'react';
-import {Text, View, TextInput, TouchableOpacity} from 'react-native';
-import {AuthContext} from '../providers/authprovider';
+import {Text, View, TouchableOpacity} from 'react-native';
 import {useTheme} from '@react-navigation/native';
+import {AuthContext} from '../providers/authprovider';
 
-function SignOutScreen({navigation}) {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-
+function SignOutScreen() {
   const {button, textInput, buttonText, container} = useTheme();
 
+  const {reSignIn} = React.useContext(AuthContext);
   return (
     <View style={container}>
       <Text style={textInput}>You have successfully signed out.</Text>
-      <TouchableOpacity
-        style={button}
-        onPress={() => signIn({email, password})}>
+      <TouchableOpacity style={button} onPress={reSignIn}>
         <Text style={buttonText}>Sign In Again</Text>
       </TouchableOpacity>
     </View>
