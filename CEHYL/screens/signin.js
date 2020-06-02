@@ -1,19 +1,18 @@
 import React from 'react';
 import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {AuthContext} from '../providers/authprovider';
-import {styles} from '../styles/signinstyle';
-import {MyTheme} from '../theme/maintheme';
+import {useTheme} from '@react-navigation/native';
 
 function SignInScreen({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const {signIn} = React.useContext(AuthContext);
-
+  const {button, textInput, buttonText, container} = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={container}>
       <TextInput
-        style={styles.textInput}
+        style={textInput}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
@@ -21,7 +20,7 @@ function SignInScreen({navigation}) {
         placeholderTextColor="white"
       />
       <TextInput
-        style={styles.textInput}
+        style={textInput}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
@@ -30,21 +29,21 @@ function SignInScreen({navigation}) {
         secureTextEntry
       />
       <TouchableOpacity
-        style={styles.button}
+        style={button}
         onPress={() => signIn({email, password})}>
-        <Text style={styles.buttonText}>Sign In</Text>
+        <Text style={buttonText}>Sign In</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.button}
+        style={button}
         onPress={() => navigation.navigate('SignUp')}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+        <Text style={buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.button}
+        style={button}
         onPress={() => navigation.navigate('ResetPassword')}>
-        <Text style={styles.buttonText}>Reset Password</Text>
+        <Text style={buttonText}>Reset Password</Text>
       </TouchableOpacity>
     </View>
   );
