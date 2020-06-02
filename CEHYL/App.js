@@ -8,6 +8,7 @@ import DiseaseScreen from './screens/disease';
 import SignUpScreen from './screens/signup';
 import ProfileScreen from './screens/profile';
 import ResetPasswordScreen from './screens/reset';
+import PersonalPageScreen from  './screens/personalpage'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MyTheme} from './theme/maintheme';
 
@@ -71,6 +72,7 @@ export default function App({navigation}) {
       <Tab.Navigator>
         <Tab.Screen name="Home" component={DiseaseScreen} />
         <Tab.Screen name="Settings" component={ProfileScreen} />
+        <Tab.Screen name="PersonalHomePage" component={PersonalPageScreen} />
       </Tab.Navigator>
     );
   }
