@@ -9,12 +9,21 @@ function DiseaseTab(props) {
 
   if (records.length === 0) {
     DiseaseAPI.getEpiWeek(props.epiWeek).then(data => {
-      const recordList = data.map(record => {
+      const recordList = getUniqueList(data, 'disease').map(record => {
         return {...record, id: uuidv4()};
       });
       setRecords(recordList);
     });
   }
+
+  // The findIndex() method returns the index of the first element,
+  // so if there is a second element that matches, it will never be found and added during the filter.
+  const getUniqueList = (list, key) => {
+    const unique = list.filter(
+      (record, index) => index === list.findIndex(r => r[key] === record[key]),
+    );
+    return unique;
+  };
 
   return (
     <View>
@@ -61,6 +70,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 220,
     bottom: 0,
+    width: '70%',
     alignSelf: 'baseline',
     justifyContent: 'center',
   },
@@ -74,10 +84,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    padding: 10,
+    padding: 20,
   },
   flatList: {
-    marginBottom: 35,
+    marginBottom: 100,
   },
 });
 
