@@ -1,6 +1,7 @@
 import React from 'react';
-import {Button, View, TextInput} from 'react-native';
+import {Text, Button, View, TextInput, TouchableOpacity} from 'react-native';
 import {AuthContext} from '../providers/authprovider';
+import {useTheme} from '@react-navigation/native';
 
 function SignUpScreen() {
   const [email, setEmail] = React.useState('');
@@ -10,27 +11,52 @@ function SignUpScreen() {
   const [gender, setGender] = React.useState('');
   const {signUp} = React.useContext(AuthContext);
 
+  const {button, textInput, buttonText, container} = useTheme();
+
   return (
-    <View>
-      <TextInput placeholder="Full Name" value={name} onChangeText={setName} />
-      <TextInput placeholder="Gender" value={gender} onChangeText={setGender} />
+    <View style={container}>
+      <TextInput
+        placeholder="Full Name"
+        style={textInput}
+        value={name}
+        onChangeText={setName}
+        placeholderTextColor="white"
+      />
+      <TextInput
+        placeholder="Gender"
+        style={textInput}
+        value={gender}
+        onChangeText={setGender}
+        placeholderTextColor="white"
+      />
       <TextInput
         placeholder="Age"
+        style={textInput}
         value={age}
         onChangeText={setAge}
         keyboardType={'number-pad'}
+        placeholderTextColor="white"
       />
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
+      <TextInput
+        placeholder="Email"
+        style={textInput}
+        value={email}
+        onChangeText={setEmail}
+        placeholderTextColor="white"
+      />
       <TextInput
         placeholder="Password"
+        style={textInput}
         value={password}
         onChangeText={setPassword}
+        placeholderTextColor="white"
         secureTextEntry
       />
-      <Button
-        title="Sign Up"
-        onPress={() => signUp({email, password, age, gender, name})}
-      />
+      <TouchableOpacity
+        style={button}
+        onPress={() => signUp({email, password, age, gender, name})}>
+        <Text style={buttonText}>Sign Up</Text>
+      </TouchableOpacity>
     </View>
   );
 }
