@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import firebase from '../Firebase';
-import {styles} from '../styles/signinstyle';
+import {useTheme} from '@react-navigation/native';
 
 function ResetPasswordScreen({navigation}) {
   const [email, setEmail] = React.useState('');
+
+  const {button, textInput, buttonText, container} = useTheme();
 
   var auth = firebase.auth();
 
@@ -27,16 +29,16 @@ function ResetPasswordScreen({navigation}) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={container}>
       <TextInput
         placeholder="Email"
         placeholderTextColor="white"
         value={email}
-        style={styles.textInput}
+        style={textInput}
         onChangeText={setEmail}
       />
-      <TouchableOpacity style={styles.button} onPress={() => reset({email})}>
-        <Text style={styles.buttonText}>Reset Password</Text>
+      <TouchableOpacity style={button} onPress={() => reset({email})}>
+        <Text style={buttonText}>Reset Password</Text>
       </TouchableOpacity>
     </View>
   );

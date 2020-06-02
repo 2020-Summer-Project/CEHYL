@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, Button, View, TextInput, TouchableOpacity} from 'react-native';
 import {AuthContext} from '../providers/authprovider';
-import {styles} from '../styles/signinstyle';
+import {useTheme} from '@react-navigation/native';
 
 function SignUpScreen() {
   const [email, setEmail] = React.useState('');
@@ -11,25 +11,27 @@ function SignUpScreen() {
   const [gender, setGender] = React.useState('');
   const {signUp} = React.useContext(AuthContext);
 
+  const {button, textInput, buttonText, container} = useTheme();
+
   return (
-    <View style={styles.container}>
+    <View style={container}>
       <TextInput
         placeholder="Full Name"
-        style={styles.textInput}
+        style={textInput}
         value={name}
         onChangeText={setName}
         placeholderTextColor="white"
       />
       <TextInput
         placeholder="Gender"
-        style={styles.textInput}
+        style={textInput}
         value={gender}
         onChangeText={setGender}
         placeholderTextColor="white"
       />
       <TextInput
         placeholder="Age"
-        style={styles.textInput}
+        style={textInput}
         value={age}
         onChangeText={setAge}
         keyboardType={'number-pad'}
@@ -37,23 +39,23 @@ function SignUpScreen() {
       />
       <TextInput
         placeholder="Email"
-        style={styles.textInput}
+        style={textInput}
         value={email}
         onChangeText={setEmail}
         placeholderTextColor="white"
       />
       <TextInput
         placeholder="Password"
-        style={styles.textInput}
+        style={textInput}
         value={password}
         onChangeText={setPassword}
         placeholderTextColor="white"
         secureTextEntry
       />
       <TouchableOpacity
-        style={styles.button}
+        style={button}
         onPress={() => signUp({email, password, age, gender, name})}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+        <Text style={buttonText}>Sign Up</Text>
       </TouchableOpacity>
     </View>
   );

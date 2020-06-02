@@ -35,6 +35,7 @@ const textInput = {
   borderRadius: 15,
   width: '80%',
   marginTop: 10,
+  padding: 10,
   color: 'white',
 };
 
