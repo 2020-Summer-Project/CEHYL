@@ -86,7 +86,7 @@ function DiseaseScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Cumulative Infection Count</Text>
+      <Text style={styles.header}>Weekly Infection Count</Text>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           disabled={disableButton[3]}
