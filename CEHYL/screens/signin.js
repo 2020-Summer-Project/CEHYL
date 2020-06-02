@@ -1,32 +1,50 @@
 import React from 'react';
-import {Button, View, TextInput, Text} from 'react-native';
+import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {AuthContext} from '../providers/authprovider';
-import SignUpScreen from './signup';
+import {useTheme} from '@react-navigation/native';
 
 function SignInScreen({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const {signIn} = React.useContext(AuthContext);
-
+  const {button, textInput, buttonText, container} = useTheme();
   return (
-    <View>
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
+    <View style={container}>
       <TextInput
+        style={textInput}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        textContentType="emailAddress"
+        placeholderTextColor="white"
+      />
+      <TextInput
+        style={textInput}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
+        textContentType="password"
+        placeholderTextColor="white"
         secureTextEntry
       />
-      <Button title="Sign In" onPress={() => signIn({email, password})} />
-      <Button
-        title="Register Here"
-        onPress={() => navigation.navigate('SignUp')}
-      />
-      <Button
-        title="Forgot your password? Reset it here."
-        onPress={() => navigation.navigate('ResetPassword')}
-      />
+      <TouchableOpacity
+        style={button}
+        onPress={() => signIn({email, password})}>
+        <Text style={buttonText}>Sign In</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={button}
+        onPress={() => navigation.navigate('SignUp')}>
+        <Text style={buttonText}>Register Here</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={button}
+        onPress={() => navigation.navigate('ResetPassword')}>
+        <Text style={buttonText}>Reset password</Text>
+      </TouchableOpacity>
     </View>
   );
 }

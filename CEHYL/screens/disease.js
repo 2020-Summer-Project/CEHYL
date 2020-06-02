@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import DiseaseTab from '../components/diseasetab';
+import {styles} from '../styles/diseasestyle';
 
 import * as DiseaseAPI from '../API/disease';
 
@@ -17,12 +18,14 @@ function DiseaseScreen() {
     false,
     false,
   ]);
+
   const [buttonStyle, setButtonStyle] = useState([
     styles.button,
     styles.button,
     styles.button,
     styles.button,
   ]);
+
   const [diseaseTabList, setDiseaseTabList] = useState([
     null,
     null,
@@ -30,15 +33,18 @@ function DiseaseScreen() {
     null,
   ]);
 
-  useEffect(async () => {
-    const latestWeek = await getLatestWeek();
+  useEffect(() => {
+    async function update() {
+      const latestWeek = await getLatestWeek();
 
-    const prevFourWeeks = DiseaseAPI.getPreviousFourWeeks(latestWeek).map(
-      week => week.replace('-W', ' Week '),
-    );
+      const prevFourWeeks = DiseaseAPI.getPreviousFourWeeks(latestWeek).map(
+        week => week.replace('-W', ' Week '),
+      );
 
-    pressButton(1, prevFourWeeks);
-    setPreviousFourWeeks(prevFourWeeks);
+      pressButton(1, prevFourWeeks);
+      setPreviousFourWeeks(prevFourWeeks);
+    }
+    update();
   }, []);
 
   const pressButton = (key, dateRange) => {
@@ -118,45 +124,5 @@ function DiseaseScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#34F5C5',
-    padding: 10,
-    borderColor: '#21D082',
-    borderRadius: 5,
-    borderWidth: 1,
-  },
-  onPressed: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#21D082',
-    padding: 10,
-    borderColor: '#21D082',
-    borderRadius: 5,
-    borderWidth: 1,
-  },
-  buttonsContainer: {
-    marginTop: 5,
-    marginBottom: 5,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'stretch',
-  },
-  container: {
-    alignItems: 'center',
-    margin: 10,
-    flex: 1,
-  },
-  header: {
-    fontSize: 32,
-    fontWeight: 'bold',
-  },
-  textStyle: {
-    textAlign: 'center',
-  },
-});
 
 export default DiseaseScreen;
