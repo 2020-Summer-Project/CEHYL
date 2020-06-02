@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Button} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -6,11 +7,13 @@ import AuthProvider from './providers/authprovider';
 import SignInScreen from './screens/signin';
 import DiseaseScreen from './screens/disease';
 import SignUpScreen from './screens/signup';
+import SignOutScreen from './screens/signout';
 import ProfileScreen from './screens/profile';
 import ResetPasswordScreen from './screens/reset';
-import PersonalPageScreen from  './screens/personalpage'
+import PersonalPageScreen from './screens/personalpage';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MyTheme} from './theme/maintheme';
+import {bottomtabstyle} from './styles/bottomtabstyles';
 
 export default function App({navigation}) {
   const Stack = createStackNavigator();
@@ -35,6 +38,12 @@ export default function App({navigation}) {
           return {
             ...prevState,
             isSignout: true,
+            userToken: null,
+          };
+        case 'RE_SIGN_IN':
+          return {
+            isLoading: false,
+            isSignout: false,
             userToken: null,
           };
       }
@@ -69,9 +78,9 @@ export default function App({navigation}) {
 
   function mainPageTab() {
     return (
-      <Tab.Navigator>
+      <Tab.Navigator tabBarOptions={bottomtabstyle}>
         <Tab.Screen name="Home" component={DiseaseScreen} />
-        <Tab.Screen name="Settings" component={ProfileScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
         <Tab.Screen name="PersonalHomePage" component={PersonalPageScreen} />
       </Tab.Navigator>
     );
@@ -82,25 +91,69 @@ export default function App({navigation}) {
       <AuthProvider dispatch={dispatch}>
         <Stack.Navigator>
           {state.userToken == null ? (
-            <>
+            state.isSignout ? (
               <Stack.Screen
-                name="SignIn"
-                component={SignInScreen}
+                name="SignOut"
+                component={SignOutScreen}
                 options={{
-                  title: 'Sign In',
+                  title: 'Sign Out',
                   headerTitleStyle: {
                     textAlign: 'center',
                   },
                 }}
               />
-              <Stack.Screen name="SignUp" component={SignUpScreen} />
-              <Stack.Screen
-                name="ResetPassword"
-                component={ResetPasswordScreen}
-              />
-            </>
+            ) : (
+              <>
+                <Stack.Screen
+                  name="SignIn"
+                  component={SignInScreen}
+                  options={{
+                    title: 'Sign In',
+                    headerTitleStyle: {
+                      textAlign: 'center',
+                    },
+                  }}
+                />
+                <Stack.Screen
+                  name="SignUp"
+                  component={SignUpScreen}
+                  options={{
+                    title: 'Sign Up',
+                    headerTitleStyle: {
+                      textAlign: 'center',
+                    },
+                  }}
+                />
+                <Stack.Screen
+                  name="ResetPassword"
+                  component={ResetPasswordScreen}
+                  options={{
+                    title: 'Reset Password',
+                    headerTitleStyle: {
+                      textAlign: 'center',
+                    },
+                  }}
+                />
+              </>
+            )
           ) : (
-            <Stack.Screen name="TrackMyHealth" component={mainPageTab} />
+            <Stack.Screen
+              name="TrackMyHealth"
+              component={mainPageTab}
+              options={{
+                title: 'TrackMyHealth',
+                headerTitleStyle: {
+                  textAlign: 'center',
+                },
+                headerRight: () => (
+                  <Button
+                    onPress={() => dispatch({type: 'SIGN_OUT'})}
+                    title="Sign Out"
+                    color="#fff"
+                  />
+                ),
+              }}
+            />
           )}
         </Stack.Navigator>
       </AuthProvider>
