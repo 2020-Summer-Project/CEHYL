@@ -1,9 +1,19 @@
 import React from 'react';
-import {Button, View, TextInput, Alert} from 'react-native';
+import {
+  Text,
+  Button,
+  View,
+  TextInput,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import firebase from '../Firebase';
+import {useTheme} from '@react-navigation/native';
 
 function ResetPasswordScreen({navigation}) {
   const [email, setEmail] = React.useState('');
+
+  const {button, textInput, buttonText, container} = useTheme();
 
   var auth = firebase.auth();
 
@@ -19,9 +29,17 @@ function ResetPasswordScreen({navigation}) {
   }
 
   return (
-    <View>
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
-      <Button title="Reset Password" onPress={() => reset({email})} />
+    <View style={container}>
+      <TextInput
+        placeholder="Email"
+        placeholderTextColor="white"
+        value={email}
+        style={textInput}
+        onChangeText={setEmail}
+      />
+      <TouchableOpacity style={button} onPress={() => reset({email})}>
+        <Text style={buttonText}>Reset Password</Text>
+      </TouchableOpacity>
     </View>
   );
 }

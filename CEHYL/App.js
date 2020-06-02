@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Button} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -6,6 +7,7 @@ import AuthProvider from './providers/authprovider';
 import SignInScreen from './screens/signin';
 import DiseaseScreen from './screens/disease';
 import SignUpScreen from './screens/signup';
+import SignOutScreen from './screens/signout';
 import ProfileScreen from './screens/profile';
 import ResetPasswordScreen from './screens/reset';
 import PersonalPageScreen from './screens/personalpage';
@@ -36,6 +38,12 @@ export default function App({navigation}) {
           return {
             ...prevState,
             isSignout: true,
+            userToken: null,
+          };
+        case 'RE_SIGN_IN':
+          return {
+            isLoading: false,
+            isSignout: false,
             userToken: null,
           };
       }
@@ -83,23 +91,51 @@ export default function App({navigation}) {
       <AuthProvider dispatch={dispatch}>
         <Stack.Navigator>
           {state.userToken == null ? (
-            <>
+            state.isSignout ? (
               <Stack.Screen
-                name="SignIn"
-                component={SignInScreen}
+                name="SignOut"
+                component={SignOutScreen}
                 options={{
-                  title: 'Sign In',
+                  title: 'Sign Out',
                   headerTitleStyle: {
                     textAlign: 'center',
                   },
                 }}
               />
-              <Stack.Screen name="SignUp" component={SignUpScreen} />
-              <Stack.Screen
-                name="ResetPassword"
-                component={ResetPasswordScreen}
-              />
-            </>
+            ) : (
+              <>
+                <Stack.Screen
+                  name="SignIn"
+                  component={SignInScreen}
+                  options={{
+                    title: 'Sign In',
+                    headerTitleStyle: {
+                      textAlign: 'center',
+                    },
+                  }}
+                />
+                <Stack.Screen
+                  name="SignUp"
+                  component={SignUpScreen}
+                  options={{
+                    title: 'Sign Up',
+                    headerTitleStyle: {
+                      textAlign: 'center',
+                    },
+                  }}
+                />
+                <Stack.Screen
+                  name="ResetPassword"
+                  component={ResetPasswordScreen}
+                  options={{
+                    title: 'Reset Password',
+                    headerTitleStyle: {
+                      textAlign: 'center',
+                    },
+                  }}
+                />
+              </>
+            )
           ) : (
             <Stack.Screen
               name="TrackMyHealth"
@@ -109,6 +145,13 @@ export default function App({navigation}) {
                 headerTitleStyle: {
                   textAlign: 'center',
                 },
+                headerRight: () => (
+                  <Button
+                    onPress={() => dispatch({type: 'SIGN_OUT'})}
+                    title="Sign Out"
+                    color="#fff"
+                  />
+                ),
               }}
             />
           )}

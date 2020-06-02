@@ -1,5 +1,4 @@
 import React, {createContext} from 'react';
-import dispatch from '../App';
 import firebase from '../Firebase';
 import {Alert} from 'react-native';
 import {NavigationHelpersContext} from '@react-navigation/native';
@@ -28,6 +27,7 @@ const AuthProvider = ({children, dispatch}) => {
         }
       },
       signOut: () => dispatch({type: 'SIGN_OUT'}),
+      reSignIn: () => dispatch({type: 'RE_SIGN_IN'}),
       signUp: async data => {
         try {
           await firebase
