@@ -1,18 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import PageButton from '../components/pagebutton';
+import {Text, TouchableOpacity, View} from 'react-native';
 import TemperatureScreen from './temperature';
-
+import { MyTheme } from '../theme/maintheme'
+import { styles } from '../styles/personalpage'
 
 function PersonalPageHomeScreen({ navigation }) {
     return(
-        <View>
-            <Text>Personal Page</Text>
-            <PageButton name="Temperature" onPress={() => navigation.navigate('Temperature')}></PageButton>
-            <PageButton name="Diet" onPress={() => navigation.navigate('Temperature')}></PageButton>
-            <PageButton name="MedicalRecords" onPress={() => navigation.navigate('Temperature')}></PageButton>
-            <PageButton name="Notes" onPress={() => navigation.navigate('Temperature')}></PageButton>
+        <View style={styles.container}>
+            <Text style={MyTheme.header}>Personal Page</Text>
+            <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Temperature')}>
+                <Text>Temperature</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Temperature')}>
+                <Text>Diet</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Temperature')}>
+                <Text>Medical Records</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Temperature')}>
+                <Text>Notes</Text>
+            </TouchableOpacity>
         </View>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { Text, TouchableOpacity, View} from 'react-native';
 import {DiseaseTab} from '../components/diseasetab';
-
+import { styles } from '../styles/diseasestyle';
 import * as DiseaseAPI from '../API/disease';
 
 const getLatestWeek = () => {
@@ -76,45 +76,5 @@ function DiseaseScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#34F5C5',
-    padding: 10,
-    borderColor: '#21D082',
-    borderRadius: 5,
-    borderWidth: 1,
-  },
-  onPressed: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#21D082',
-    padding: 10,
-    borderColor: '#21D082',
-    borderRadius: 5,
-    borderWidth: 1,
-  },
-  buttonsContainer: {
-    marginTop: 5,
-    marginBottom: 5,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'stretch',
-  },
-  container: {
-    alignItems: 'center',
-    margin: 10,
-    flex: 1,
-  },
-  header: {
-    fontSize: 32,
-    fontWeight: 'bold',
-  },
-  textStyle: {
-    textAlign: 'center',
-  }
-})
 
 export default DiseaseScreen;

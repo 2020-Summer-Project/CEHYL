@@ -7,4 +7,8 @@ export const MyTheme = {
     text: '#2F455C',
     border: '#21D082',
   },
+  header: {
+    fontSize: 32,
+    fontWeight: 'bold',
+  }
 };
