@@ -1,5 +1,4 @@
 import React, {createContext} from 'react';
-import dispatch from '../App';
 import firebase from '../Firebase';
 import {Alert} from 'react-native';
 import {NavigationHelpersContext} from '@react-navigation/native';
