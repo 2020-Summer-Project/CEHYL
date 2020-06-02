@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button} from 'react-native';
+import {TouchableOpacity, Text} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -148,11 +148,11 @@ export default function App({navigation}) {
                   textAlign: 'center',
                 },
                 headerRight: () => (
-                  <Button
-                    onPress={() => dispatch({type: 'SIGN_OUT'})}
-                    title="Sign Out"
-                    color="#fff"
-                  />
+                  <Text
+                    style={{...MyTheme.buttonText, marginRight: 15}}
+                    onPress={() => dispatch({type: 'SIGN_OUT'})}>
+                    Sign Out
+                  </Text>
                 ),
               }}
             />
