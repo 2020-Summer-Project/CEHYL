@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View} from 'react-native';
-import {DiseaseTab} from '../components/diseasetab';
-import { styles } from '../styles/diseasestyle';
+import React, {useState, useEffect} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
+import DiseaseTab from '../components/diseasetab';
+import {styles} from '../styles/diseasestyle';
+
 import * as DiseaseAPI from '../API/disease';
 
 const getLatestWeek = () => {
@@ -17,7 +18,7 @@ function DiseaseScreen() {
     false,
     false,
   ]);
-  const [listOfRecords, setListOfRecords] = useState([]);
+
   const [buttonStyle, setButtonStyle] = useState([
     styles.button,
     styles.button,
@@ -25,27 +26,25 @@ function DiseaseScreen() {
     styles.button,
   ]);
 
+  const [diseaseTabList, setDiseaseTabList] = useState([
+    null,
+    null,
+    null,
+    null,
+  ]);
+
   useEffect(() => {
-    async function updateRecords() {
+    async function update() {
       const latestWeek = await getLatestWeek();
 
       const prevFourWeeks = DiseaseAPI.getPreviousFourWeeks(latestWeek).map(
         week => week.replace('-W', ' Week '),
       );
-      const result = [];
-      prevFourWeeks.map(async week => {
-        const response = await DiseaseAPI.getEpiWeek(
-          week.replace(' Week ', '-W'),
-        );
-        result.push(response);
-      });
 
       pressButton(1, prevFourWeeks);
       setPreviousFourWeeks(prevFourWeeks);
-      setListOfRecords(result);
     }
-
-    updateRecords();
+    update();
   }, []);
 
   const pressButton = (key, dateRange) => {
@@ -55,12 +54,23 @@ function DiseaseScreen() {
     const week = parseInt(dateRange[index].substring(length - 2, length));
     changeButtonStatus(index);
     changeButtonStyle(index);
-    setTabScreen(
-      <DiseaseTab
-        week={week}
-        dateRange={DiseaseAPI.getDateRangeOfWeek(week, year)}
-      />,
-    );
+
+    let tabScreen = diseaseTabList[index];
+    if (tabScreen === null) {
+      const epiWeek = `${year}-W` + (week <= 9 ? '0' + week : week);
+      tabScreen = (
+        <DiseaseTab
+          key={key}
+          week={week}
+          dateRange={DiseaseAPI.getDateRangeOfWeek(week, year)}
+          epiWeek={epiWeek}
+        />
+      );
+      const updatedDiseaseTabList = [...diseaseTabList];
+      updatedDiseaseTabList[index] = tabScreen;
+      setDiseaseTabList(updatedDiseaseTabList);
+    }
+    setTabScreen(tabScreen);
   };
 
   const changeButtonStatus = index => {
@@ -82,7 +92,7 @@ function DiseaseScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Weekly Disease</Text>
+      <Text style={styles.header}>Weekly Infection Count</Text>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           disabled={disableButton[3]}
@@ -111,7 +121,6 @@ function DiseaseScreen() {
       </View>
       {tabScreen}
       {console.log('rendered ran')}
-      <Text onPress={() => console.log(listOfRecords)}>Press</Text>
     </View>
   );
 }
