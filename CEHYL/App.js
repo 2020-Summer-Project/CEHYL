@@ -11,6 +11,7 @@ import SignOutScreen from './screens/signout';
 import ProfileScreen from './screens/profile';
 import ResetPasswordScreen from './screens/reset';
 import PersonalPageScreen from './screens/personalpage';
+import Forum from './screens/forum';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MyTheme} from './theme/maintheme';
 import {bottomtabstyle} from './styles/bottomtabstyles';
@@ -82,6 +83,7 @@ export default function App({navigation}) {
         <Tab.Screen name="Home" component={DiseaseScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
         <Tab.Screen name="PersonalHomePage" component={PersonalPageScreen} />
+        <Tab.Screen name="Forum" component={Forum} />
       </Tab.Navigator>
     );
   }
