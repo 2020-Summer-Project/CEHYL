@@ -1,6 +1,14 @@
 import React from 'react';
-import {Button, View, TextInput, Alert} from 'react-native';
+import {
+  Text,
+  Button,
+  View,
+  TextInput,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import firebase from '../Firebase';
+import {styles} from '../styles/signinstyle';
 
 function ResetPasswordScreen({navigation}) {
   const [email, setEmail] = React.useState('');
@@ -19,9 +27,17 @@ function ResetPasswordScreen({navigation}) {
   }
 
   return (
-    <View>
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
-      <Button title="Reset Password" onPress={() => reset({email})} />
+    <View style={styles.container}>
+      <TextInput
+        placeholder="Email"
+        placeholderTextColor="white"
+        value={email}
+        style={styles.textInput}
+        onChangeText={setEmail}
+      />
+      <TouchableOpacity style={styles.button} onPress={() => reset({email})}>
+        <Text style={styles.buttonText}>Reset Password</Text>
+      </TouchableOpacity>
     </View>
   );
 }

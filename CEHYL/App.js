@@ -92,10 +92,25 @@ export default function App({navigation}) {
                   },
                 }}
               />
-              <Stack.Screen name="SignUp" component={SignUpScreen} />
+              <Stack.Screen
+                name="SignUp"
+                component={SignUpScreen}
+                options={{
+                  title: 'Sign Up',
+                  headerTitleStyle: {
+                    textAlign: 'center',
+                  },
+                }}
+              />
               <Stack.Screen
                 name="ResetPassword"
                 component={ResetPasswordScreen}
+                options={{
+                  title: 'Reset Password',
+                  headerTitleStyle: {
+                    textAlign: 'center',
+                  },
+                }}
               />
             </>
           ) : (

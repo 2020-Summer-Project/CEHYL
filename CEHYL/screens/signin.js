@@ -38,13 +38,13 @@ function SignInScreen({navigation}) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('SignUp')}>
-        <Text style={styles.buttonText}>Register Here</Text>
+        <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('ResetPassword')}>
-        <Text style={styles.buttonText}>Reset password</Text>
+        <Text style={styles.buttonText}>Reset Password</Text>
       </TouchableOpacity>
     </View>
   );
