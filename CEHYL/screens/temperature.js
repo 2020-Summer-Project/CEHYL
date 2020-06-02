@@ -32,7 +32,6 @@ export default function TemperatureScreen({ navigation }) {
 
     const addTemperatureToDatabase = () => {
         const dateTime = dateTimeInString()
-        console.log(dateTime)
         firebase.database().ref('temperature/' + user.uid + '/' + dateTime).set({
             temperature: temperature,
             date: dateTime,
@@ -40,9 +39,17 @@ export default function TemperatureScreen({ navigation }) {
     }
 
     const dateTimeInString = () => {
+        let formattedDate = formatDate(date.getDate().toString())
         let minutes = formatMinutes(date.getMinutes().toString())
-        console.log(minutes)
-        return date.getDate() + "-" + (date.getMonth() + 1) + '-' + date.getFullYear() + " " + date.getHours() + ":" + minutes
+        let month = formatDate((date.getMonth() + 1).toString())
+        return date.getFullYear() + "-" + month + '-' + formattedDate + " " + date.getHours() + ":" + minutes
+    }
+
+    const formatDate = (date) => {
+        if (date.length === 2) {
+            return date
+        }
+        return "0" + date
     }
 
     const formatMinutes = (minutes) => {
@@ -75,7 +82,8 @@ export default function TemperatureScreen({ navigation }) {
         const sortedData = {}
         Object.keys(dataRetrieved).sort(
             (a, b) => {
-                return new Date(a) > new Date(b) ? 1 : -1
+                console.log(a)
+                return new Date(a.replace(" ", "T")) - new Date(b.replace(" ", "T"))
             })
             .reverse()
             .forEach((key) => sortedData[key] = dataRetrieved[key])
@@ -91,20 +99,10 @@ export default function TemperatureScreen({ navigation }) {
         try {
             const listener = firebase.database().ref('temperature/' + user.uid)
             listener.on('value', function(snapshot) {
-                const dataRetrieved = snapshot.val();
+                const dataRetrieved = snapshot.val() || {} ;
                 const result = processRetrievedData(dataRetrieved);
                 setListOfTemperature(result)
             })
-                // .once('value')
-                // .then(function(snapshot) {
-                //     Object.keys(dataRetrieved).sort( (a, b) => {
-                //         return new Date(a) - new Date(b)
-                //     }).reverse().forEach((key) => sortedData[key] = dataRetrieved[key])
-                //     const result = Object.values(sortedData).map(data => {
-                //         return {...data, id: uuidv4()}
-                //     })
-                //     setListOfTemperature(result)
-                // });
         } catch(err) {
             Alert.alert(err);
         }
@@ -116,7 +114,7 @@ export default function TemperatureScreen({ navigation }) {
 
             <View style={styles.row}>
                 <TouchableOpacity style={button} onPress={showDatepicker}>
-                    <Text style={styles.textCenter}>{date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()}</Text>
+                    <Text style={styles.textCenter}>{formatDate(date.getDate().toString()) + "/" + formatDate((date.getMonth() + 1).toString()) + "/" + date.getFullYear()}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={button} onPress={showTimepicker}>
                     <Text style={styles.textCenter}>{date.getHours() + ":" + formatMinutes(date.getMinutes().toString())}</Text>
