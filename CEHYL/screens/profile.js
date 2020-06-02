@@ -32,18 +32,22 @@ function ProfileScreen({navigation}) {
   }
 
   async function updateProfile(email, password, name, age, gender) {
-    await firebase
-      .database()
-      .ref('users/' + user.uid)
-      .set({
-        email: email,
-        age: age,
-        gender: gender,
-        name: name,
-      });
-    await user.updateEmail(email);
-    await user.updatePassword(password);
-    setFields(false);
+    try {
+      await user.updateEmail(email);
+      await user.updatePassword(password);
+      await firebase
+        .database()
+        .ref('users/' + user.uid)
+        .set({
+          email: email,
+          age: age,
+          gender: gender,
+          name: name,
+        });
+      setFields(false);
+    } catch (error) {
+      Alert.alert(error);
+    }
   }
 
   useEffect(() => defaultProfile(), []);
