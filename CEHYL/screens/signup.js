@@ -7,7 +7,7 @@ function SignUpScreen() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [name, setName] = React.useState('');
-  const [age, setAge] = React.useState(0);
+  const [age, setAge] = React.useState('0');
   const [gender, setGender] = React.useState('');
   const {signUp} = React.useContext(AuthContext);
 

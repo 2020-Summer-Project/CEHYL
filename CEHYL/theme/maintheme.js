@@ -39,6 +39,11 @@ const textInput = {
   color: 'white',
 };
 
+const header = {
+  fontSize: 32,
+  fontWeight: 'bold',
+}
+
 export const MyTheme = {
   dark: false,
   colors: colors,
@@ -46,4 +51,5 @@ export const MyTheme = {
   buttonText: buttonText,
   container: container,
   textInput: textInput,
+  header: header
 };

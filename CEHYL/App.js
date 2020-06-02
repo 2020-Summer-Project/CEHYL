@@ -8,9 +8,10 @@ import DiseaseScreen from './screens/disease';
 import SignUpScreen from './screens/signup';
 import ProfileScreen from './screens/profile';
 import ResetPasswordScreen from './screens/reset';
-import PersonalPageScreen from  './screens/personalpage'
+import PersonalPageScreen from './screens/personalpage';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MyTheme} from './theme/maintheme';
+import {bottomtabstyle} from './styles/bottomtabstyles';
 
 export default function App({navigation}) {
   const Stack = createStackNavigator();
@@ -69,9 +70,9 @@ export default function App({navigation}) {
 
   function mainPageTab() {
     return (
-      <Tab.Navigator>
+      <Tab.Navigator tabBarOptions={bottomtabstyle}>
         <Tab.Screen name="Home" component={DiseaseScreen} />
-        <Tab.Screen name="Settings" component={ProfileScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
         <Tab.Screen name="PersonalHomePage" component={PersonalPageScreen} />
       </Tab.Navigator>
     );
@@ -115,7 +116,16 @@ export default function App({navigation}) {
               />
             </>
           ) : (
-            <Stack.Screen name="TrackMyHealth" component={mainPageTab} />
+            <Stack.Screen
+              name="TrackMyHealth"
+              component={mainPageTab}
+              options={{
+                title: 'TrackMyHealth',
+                headerTitleStyle: {
+                  textAlign: 'center',
+                },
+              }}
+            />
           )}
         </Stack.Navigator>
       </AuthProvider>
