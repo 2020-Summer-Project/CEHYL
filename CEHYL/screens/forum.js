@@ -2,8 +2,8 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from '@react-navigation/native';
-import CreatePostScreen from './CreatePostScreen';
-import ForumPostsScreen from './ForumPostsScreen';
+import CreatePostScreen from './createpostscreen';
+import ForumPostsScreen from './forumpostsscreen';
 
 const styles = StyleSheet.create({
   btn: {
