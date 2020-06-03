@@ -11,7 +11,7 @@ import {
   FlatList,
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
-import {addPost, getUserPosts} from '../API/database';
+import {addPost, getUserPosts, deletePost} from '../API/database';
 import moment from 'moment';
 import Card from '../components/card';
 import {v4 as uuidv4} from 'uuid';
@@ -61,6 +61,12 @@ export default function CreatePostScreen({navigation}) {
     },
     flatlist: {
       marginVertical: 10,
+    },
+    deletePost: {
+      position: 'relative',
+      bottom: -10,
+      color: 'red',
+      fontSize: 20,
     },
   });
 
@@ -123,6 +129,12 @@ export default function CreatePostScreen({navigation}) {
     }
   };
 
+  const deleteItem = post => {
+    deletePost(post.timestamp);
+    var posts = data;
+    setData(posts.filter(item => item.timestamp !== post.timestamp));
+  };
+
   useEffect(() => {
     updatePostList();
   }, []);
@@ -170,6 +182,9 @@ export default function CreatePostScreen({navigation}) {
             </View>
             <View style={styles.descriptionContainer}>
               <Text>{item.description}</Text>
+              <Text style={styles.deletePost} onPress={() => deleteItem(item)}>
+                Delete
+              </Text>
             </View>
           </Card>
         )}
