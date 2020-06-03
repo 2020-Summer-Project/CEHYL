@@ -91,7 +91,7 @@ export default function ForumPostsScreen({navigation}) {
   }, []);
 
   return (
-    <View style={container}>
+    <View style={{...container, paddingTop: 0}}>
       <Text style={{...headerWithNoMargin, ...styles.title}}>Posts</Text>
       <FlatList
         data={data}
