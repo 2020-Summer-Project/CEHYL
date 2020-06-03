@@ -1,5 +1,11 @@
 import React, {useEffect} from 'react';
-import {TouchableOpacity, View, TextInput, Text, Alert} from 'react-native';
+import {
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+  Text,
+  Alert,
+} from 'react-native';
 import firebase from '../Firebase';
 import {useTheme} from '@react-navigation/native';
 
@@ -11,7 +17,7 @@ function ProfileScreen({navigation}) {
   const [age, setAge] = React.useState('0');
   const [gender, setGender] = React.useState('');
   const [editable, setFields] = React.useState(false);
-  const {button, textInput, buttonText, container} = useTheme();
+  const {button, textInput, buttonText, container, header} = useTheme();
 
   function defaultProfile() {
     try {
@@ -53,7 +59,8 @@ function ProfileScreen({navigation}) {
   useEffect(() => defaultProfile(), []);
 
   return (
-    <View style={container}>
+    <ScrollView contentContainerStyle={container}>
+      <Text style={header}>Profile</Text>
       <TextInput
         style={textInput}
         editable={editable}
@@ -112,7 +119,7 @@ function ProfileScreen({navigation}) {
           <Text style={buttonText}>Edit</Text>
         </TouchableOpacity>
       )}
-    </View>
+    </ScrollView>
   );
 }
 
