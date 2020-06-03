@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View, Image} from 'react-native';
 import TemperatureScreen from './temperature';
-import MedicalRecordsScreen from './medicalrecords';
+import NotesScreen from './notes';
 import {MyTheme} from '../theme/maintheme';
 import {styles} from '../styles/personalpage';
 
@@ -10,26 +10,20 @@ function PersonalPageHomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={MyTheme.header}>Personal Page</Text>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => navigation.navigate('Temperature')}>
-        <Text>Temperature</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => navigation.navigate('Temperature')}>
-        <Text>Diet</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => navigation.navigate('MedicalRecords')}>
-        <Text>Medical Records</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => navigation.navigate('Temperature')}>
-        <Text>Notes</Text>
-      </TouchableOpacity>
+      <View style={styles.box}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => navigation.navigate('Temperature')}>
+          <Text style={styles.text}>Temperature</Text>
+          <Image source={require('../icons8-temperature-100.png')} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => navigation.navigate('Notes')}>
+          <Text style={styles.text}>Notes</Text>
+          <Image source={require('../icons8-create-document-100.png')} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -52,11 +46,7 @@ function PersonalPageScreen() {
         component={TemperatureScreen}
       />
       <PersonalPageStack.Screen name="Diet" component={TemperatureScreen} />
-      <PersonalPageStack.Screen
-        name="MedicalRecords"
-        component={MedicalRecordsScreen}
-      />
-      <PersonalPageStack.Screen name="Notes" component={TemperatureScreen} />
+      <PersonalPageStack.Screen name="Notes" component={NotesScreen} />
     </PersonalPageStack.Navigator>
   );
 }
