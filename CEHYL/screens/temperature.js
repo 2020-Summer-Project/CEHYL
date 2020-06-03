@@ -17,7 +17,7 @@ import {v4 as uuidv4} from 'uuid';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function TemperatureScreen({navigation}) {
-  const {header, textInput} = useTheme();
+  const { colors, headerWithNoMargin, textInput } = useTheme();
   const [temperature, setTemperature] = useState('');
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -180,7 +180,7 @@ export default function TemperatureScreen({navigation}) {
   return (
     <View style={styles.screenView}>
       <View style={styles.container}>
-        <Text style={header}>Temperature Record</Text>
+        <Text style={ headerWithNoMargin }>Temperature Record</Text>
 
         <View style={styles.row}>
           <TouchableOpacity style={styles.button} onPress={showDatepicker}>
@@ -217,6 +217,7 @@ export default function TemperatureScreen({navigation}) {
             keyboardType="numeric"
             style={textInput}
             placeholder="Your temperature here"
+            placeholderTextColor={colors.textColor}
             onChangeText={setTemperature}
             value={temperature}
           />

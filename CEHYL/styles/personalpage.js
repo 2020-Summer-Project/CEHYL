@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
   },
   item: {
     marginBottom: '30%',
+    marginHorizontal: 10,
     width: '40%',
     height: '80%',
     alignItems: 'center',

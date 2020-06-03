@@ -69,10 +69,10 @@ export const styles = StyleSheet.create({
     margin: 5,
   },
   headerTemp: {
-    color: MyTheme.textColor,
+    color: MyTheme.colors.textColor,
   },
   headerDate: {
     paddingRight: 70,
-    color: MyTheme.textColor,
+    color: MyTheme.colors.textColor,
   },
 });

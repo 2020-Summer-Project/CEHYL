@@ -4,6 +4,7 @@ const colors = {
   card: '#34F5C5',
   text: '#2F455C',
   border: '#21D082',
+  textColor: 'white',
 };
 
 const button = {
@@ -51,6 +52,16 @@ const header = {
   color: 'white',
 };
 
+const headerWithNoMargin = {
+  fontSize: 32,
+  color: '#FFFFFF',
+  fontWeight: 'bold',
+  textAlign: 'center',
+  alignContent: 'center',
+  padding: '4%',
+  color: 'white',
+}
+
 export const MyTheme = {
   dark: false,
   colors: colors,
@@ -59,5 +70,5 @@ export const MyTheme = {
   container: container,
   textInput: textInput,
   header: header,
-  textColor: colors.textColor,
+  headerWithNoMargin: headerWithNoMargin,
 };
