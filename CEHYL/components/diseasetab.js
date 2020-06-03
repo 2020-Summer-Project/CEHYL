@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, FlatList, Dimensions} from 'react-native';
 import Card from '../components/card';
 import * as DiseaseAPI from '../API/disease';
 import {v4 as uuidv4} from 'uuid';
@@ -27,8 +27,7 @@ function DiseaseTab(props) {
 
   return (
     <View>
-      <Text>{props.dateRange}</Text>
-      <Text>{props.epiWeek}</Text>
+      <Text style={styles.dateRange}>{props.dateRange}</Text>
       <View style={styles.headerStyle}>
         <Text style={styles.header}>Disease Name</Text>
         <Text style={styles.header}>Number of occurence</Text>
@@ -58,19 +57,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 10,
+    fontSize: 20,
+  },
+  dateRange: {
+    fontSize: 20,
+    color: 'white',
+    textAlign: 'center',
+    marginTop: 10,
   },
   header: {
     fontWeight: 'bold',
     textDecorationLine: 'underline',
     marginHorizontal: 40,
+    color: 'white',
   },
   title1: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 220,
-    bottom: 0,
-    width: '70%',
+    width: '60%',
     alignSelf: 'baseline',
     justifyContent: 'center',
   },
@@ -84,10 +86,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    padding: 20,
+    padding: 10,
   },
   flatList: {
-    marginBottom: 100,
+    marginBottom: Dimensions.get('window').height * 0.35,
   },
 });
 

@@ -5,8 +5,10 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
+import {addPost} from '../API/database';
 
 export default function CreatePostScreen({navigation}) {
   const {button, buttonText, container, header, textInput, colors} = useTheme();
@@ -32,7 +34,15 @@ export default function CreatePostScreen({navigation}) {
     },
   });
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    const failTramission = await addPost(title, description);
+    if (failTramission) {
+      Alert.alert('Fail transmission', 'Please resubmit the post again!');
+    }
+    setDescription('');
+    setTitle('');
+    Alert.alert('Success', 'You have post successfully!');
+  };
 
   return (
     <View style={container}>
