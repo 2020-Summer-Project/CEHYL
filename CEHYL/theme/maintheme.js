@@ -4,7 +4,6 @@ const colors = {
   card: '#34F5C5',
   text: '#2F455C',
   border: '#21D082',
-  textColor: 'white',
 };
 
 const button = {
@@ -30,7 +29,6 @@ const container = {
 
 const textInput = {
   backgroundColor: colors.background,
-  placeholderTextColor: 'white',
   textAlign: 'center',
   borderColor: colors.card,
   borderWidth: 2,
