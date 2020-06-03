@@ -17,7 +17,7 @@ import {v4 as uuidv4} from 'uuid';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function TemperatureScreen({navigation}) {
-  const { colors, headerWithNoMargin, textInput } = useTheme();
+  const {colors, headerWithNoMargin, textInput} = useTheme();
   const [temperature, setTemperature] = useState('');
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -46,13 +46,22 @@ export default function TemperatureScreen({navigation}) {
     return Alert.alert('Temperature added');
   };
 
+  const processTemperature = temperature => {
+    if (temperature.includes('.')) {
+      return temperature;
+    } else {
+      return temperature + '.0';
+    }
+  };
+
   const addTemperatureToDatabase = () => {
     const dateTime = dateTimeInString();
+    const temp = processTemperature(temperature);
     firebase
       .database()
       .ref('temperature/' + user.uid + '/' + dateTime)
       .set({
-        temperature: temperature,
+        temperature: temp,
         date: dateTime,
       });
   };
@@ -180,7 +189,7 @@ export default function TemperatureScreen({navigation}) {
   return (
     <View style={styles.screenView}>
       <View style={styles.container}>
-        <Text style={ headerWithNoMargin }>Temperature Record</Text>
+        <Text style={headerWithNoMargin}>Temperature Record</Text>
 
         <View style={styles.row}>
           <TouchableOpacity style={styles.button} onPress={showDatepicker}>
@@ -247,6 +256,7 @@ export default function TemperatureScreen({navigation}) {
                   flexDirection: 'row',
                   justifyContent: 'space-evenly',
                   width: '100%',
+                  alignItems: 'center',
                   paddingRight: 30,
                 }}>
                 <View style={styles.cardViewLeft}>
@@ -262,7 +272,6 @@ export default function TemperatureScreen({navigation}) {
                 </View>
                 <TouchableOpacity
                   style={{
-                    position: 'absolute',
                     alignSelf: 'center',
                     justifyContent: 'flex-end',
                   }}
