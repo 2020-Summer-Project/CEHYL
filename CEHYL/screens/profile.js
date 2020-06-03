@@ -14,10 +14,17 @@ function ProfileScreen({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [name, setName] = React.useState('');
-  const [age, setAge] = React.useState("");
+  const [age, setAge] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [editable, setFields] = React.useState(false);
-  const {button, textInput, buttonText, container, colors, headerWithNoMargin} = useTheme();
+  const {
+    button,
+    textInput,
+    buttonText,
+    container,
+    colors,
+    headerWithNoMargin,
+  } = useTheme();
 
   function defaultProfile() {
     try {
@@ -40,7 +47,16 @@ function ProfileScreen({navigation}) {
   async function updateProfile(email, password, name, age, gender) {
     try {
       await user.updateEmail(email);
-      await user.updatePassword(password);
+      if (password === undefined) {
+        Alert.alert('Password cannot leave blank');
+        return;
+      }
+      try {
+        await user.updatePassword(password);
+      } catch (err) {
+        console.log(err);
+        Alert.alert(err.message);
+      }
       await firebase
         .database()
         .ref('users/' + user.uid)
@@ -50,9 +66,11 @@ function ProfileScreen({navigation}) {
           gender: gender,
           name: name,
         });
+      Alert.alert('Profile information has been updated!');
       setFields(false);
+      setPassword('');
     } catch (error) {
-      Alert.alert(error);
+      Alert.alert(error.message);
     }
   }
 
