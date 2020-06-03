@@ -23,6 +23,15 @@ export default function TemperatureScreen({ navigation }) {
         if (isNaN(temperature) || temperature.length === 0) {
             return Alert.alert('Not a number')
         }
+
+        if (parseFloat(temperature) > 45 || parseFloat(temperature) < 30) {
+            return Alert.alert('Temperature must be within 30 - 45 degree celcius')
+        }
+
+        const isValidTemperature = validTemperatureDecimalPoint()
+        if (!isValidTemperature) {
+            return Alert.alert('Please provide a single decimal point temperature')
+        }
         addTemperatureToDatabase()
 
         setTemperature('')
@@ -38,25 +47,19 @@ export default function TemperatureScreen({ navigation }) {
         })
     }
 
+    const validTemperatureDecimalPoint = () => {
+        const splitTemperature = temperature.split('.')
+        if (splitTemperature[1].length > 1) {
+            return false
+        }
+        return true
+    }
+
     const dateTimeInString = () => {
         let formattedDate = formatDate(date.getDate().toString())
         let minutes = formatMinutes(date.getMinutes().toString())
         let month = formatDate((date.getMonth() + 1).toString())
         return date.getFullYear() + "-" + month + '-' + formattedDate + " " + date.getHours() + ":" + minutes
-    }
-
-    const formatDate = (date) => {
-        if (date.length === 2) {
-            return date
-        }
-        return "0" + date
-    }
-
-    const formatMinutes = (minutes) => {
-        if (minutes.length === 2) {
-            return minutes
-        }
-        return "0" + minutes
     }
 
     const onChange = (event, selectedDate) => {
@@ -82,7 +85,6 @@ export default function TemperatureScreen({ navigation }) {
         const sortedData = {}
         Object.keys(dataRetrieved).sort(
             (a, b) => {
-                console.log(a)
                 return new Date(a.replace(" ", "T")) - new Date(b.replace(" ", "T"))
             })
             .reverse()
@@ -91,13 +93,25 @@ export default function TemperatureScreen({ navigation }) {
             .map(data => {
                 return {...data, id: uuidv4()}
             })
-            console.log(result)
         return result
+    }
+
+    const formatDate = (date) => {
+        if (date.length === 2) {
+            return date
+        }
+        return "0" + date
+    }
+
+    const formatMinutes = (minutes) => {
+        if (minutes.length === 2) {
+            return minutes
+        }
+        return "0" + minutes
     }
 
     const formatHour = (time) => {
         const splitTime = time.split(/:/)
-        console.log(splitTime);
         if (splitTime[0].length === 2) {    
             return time
         }
@@ -108,6 +122,17 @@ export default function TemperatureScreen({ navigation }) {
         const regexToSplit = /-| /
         const splitDate = dataDate.split(regexToSplit)
         return splitDate[2] + '-' + splitDate[1] + '-' + splitDate[0] + ' ' + formatHour(splitDate[3])
+    }
+    
+    const handleDelete = (item) => {
+        let itemsToBeRemoved = listOfTemperature.filter((temperature) => {
+            return temperature.id === item.id
+        })
+        firebase
+            .database()
+            .ref('temperature/' + user.uid + '/' + itemsToBeRemoved[0].date) 
+            .set(null)
+        Alert.alert('Temperature deleted!')
     }
 
     useEffect(() =>{
@@ -173,11 +198,27 @@ export default function TemperatureScreen({ navigation }) {
                     data={listOfTemperature}
                     renderItem={({item}) => (
                         <Card style={styles.card}>
-                            <View style={styles.cardViewLeft}>
-                                <Text>{formatDisplayDate(item.date)}</Text>
-                            </View>
-                            <View style={styles.cardViewRight}> 
-                                <Text>{item.temperature}</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-evenly',
+                                width: '100%',
+                                paddingRight: 30,
+                            }}>
+                                <View style={styles.cardViewLeft}>
+                                    <Text>{formatDisplayDate(item.date)}</Text>
+                                </View>
+                                <View style={styles.cardViewRight}> 
+                                    <Text>{item.temperature}</Text>
+                                </View>
+                                <TouchableOpacity 
+                                style={{
+                                    position: 'absolute',
+                                    alignSelf: 'center',
+                                    justifyContent: 'flex-end',
+                                }} 
+                                onPress={() => handleDelete(item)}>
+                                    <Image source={require('../images/baseline_delete_black_18dp.png')}/>                        
+                                </TouchableOpacity>
                             </View>
                         </Card>
                     )}
