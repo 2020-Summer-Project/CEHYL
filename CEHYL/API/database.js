@@ -40,7 +40,16 @@ export async function deletePost(timestamp) {
   await deleteData(ref);
 }
 
-export async function getPosts() {
+export async function getAllPosts() {
+  var ref = 'post/';
+  const response = await firebase
+    .database()
+    .ref(ref)
+    .once('value');
+  return response.val();
+}
+
+export async function getUserPosts() {
   var userId = firebase.auth().currentUser.uid;
   var ref = 'post/' + userId;
   const response = await firebase
