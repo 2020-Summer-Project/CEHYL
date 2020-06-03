@@ -1,5 +1,4 @@
 import firebase from '../Firebase';
-import {getCurrentTimestamp} from '../API/timestamp';
 
 async function writeData(ref, data) {
   await firebase
@@ -8,10 +7,9 @@ async function writeData(ref, data) {
     .set(data);
 }
 
-export async function addPost(title, description) {
+export async function addPost(title, description, timestamp) {
   try {
     var userId = firebase.auth().currentUser.uid;
-    const timestamp = getCurrentTimestamp();
     var ref = 'post/' + userId + '/' + timestamp;
     var postInfo = {
       timestamp: timestamp,

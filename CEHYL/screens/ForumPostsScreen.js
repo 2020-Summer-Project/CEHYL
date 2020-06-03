@@ -14,7 +14,7 @@ import moment from 'moment';
 
 export default function ForumPostsScreen({navigation}) {
   const {button, buttonText, container, header, textInput, colors} = useTheme();
-  const [data, setData] = useState([{id: 'a'}, {id: 'b'}]);
+  const [data, setData] = useState([]);
   const [isRefreshing, setLoading] = useState(false);
 
   const styles = StyleSheet.create({
@@ -33,7 +33,6 @@ export default function ForumPostsScreen({navigation}) {
       marginTop: 10,
       flexWrap: 'wrap',
     },
-    description: {},
     post: {
       flexDirection: 'column',
       width: (Dimensions.get('window').width * 80) / 100,
@@ -53,7 +52,7 @@ export default function ForumPostsScreen({navigation}) {
             title: individualPost.title,
             description: individualPost.description,
             timestamp: individualPost.timestamp,
-            id: id,
+            id: id.toString(),
           });
           id++;
         });
@@ -105,7 +104,7 @@ export default function ForumPostsScreen({navigation}) {
               <Text>{item.timestamp}</Text>
             </View>
             <View style={styles.descriptionContainer}>
-              <Text style={styles.description}>{item.description}</Text>
+              <Text>{item.description}</Text>
             </View>
           </Card>
         )}

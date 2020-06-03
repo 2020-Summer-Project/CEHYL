@@ -21,6 +21,7 @@ const buttonText = {
 };
 
 const container = {
+  flex: 1,
   alignItems: 'center',
   justifyContent: 'center',
   width: '100%',
@@ -42,7 +43,7 @@ const textInput = {
 const header = {
   fontSize: 32,
   fontWeight: 'bold',
-}
+};
 
 export const MyTheme = {
   dark: false,
@@ -51,5 +52,5 @@ export const MyTheme = {
   buttonText: buttonText,
   container: container,
   textInput: textInput,
-  header: header
+  header: header,
 };
