@@ -17,5 +17,5 @@ export const styles =  StyleSheet.create({
         borderColor: MyTheme.colors.border,
         borderRadius: 5,
         borderWidth: 1,
-    }
+    },
 })
