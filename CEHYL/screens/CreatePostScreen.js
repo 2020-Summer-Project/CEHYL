@@ -141,13 +141,9 @@ export default function CreatePostScreen({navigation}) {
 
   return (
     <ScrollView
-      contentContainerStyle={
-        (container,
-        {
-          height: Dimensions.height,
-          alignItems: 'center',
-        })
-      }>
+      contentContainerStyle={{
+        alignItems: 'center',
+      }}>
       <Text style={{...header, ...styles.title}}>Create a Post!</Text>
       <TextInput
         keyboardType="default"
