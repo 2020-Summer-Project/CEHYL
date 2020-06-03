@@ -1,15 +1,16 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Text, TouchableOpacity, View, Image} from 'react-native';
+import { useTheme } from '@react-navigation/native';
+import {Text, TouchableOpacity, View, Image } from 'react-native';
 import TemperatureScreen from './temperature';
 import NotesScreen from './notes';
-import {MyTheme} from '../theme/maintheme';
 import {styles} from '../styles/personalpage';
 
 function PersonalPageHomeScreen({navigation}) {
+  const { headerWithNoMargin } = useTheme();
   return (
     <View style={styles.container}>
-      <Text style={MyTheme.header}>Personal Page</Text>
+      <Text style={headerWithNoMargin}>Personal Page</Text>
       <View style={styles.box}>
         <TouchableOpacity
           style={styles.item}
