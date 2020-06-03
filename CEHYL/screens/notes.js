@@ -7,13 +7,13 @@ import {
   Alert,
   KeyboardAvoidingView,
 } from 'react-native';
+import {AuthContext} from '../providers/authprovider';
 import {useTheme} from '@react-navigation/native';
 import firebase from '../Firebase';
 import {v4 as uuidv4} from 'uuid';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {styles} from '../styles/notesstyles';
 import Card from '../components/card';
-import {Header} from 'react-native/Libraries/NewAppScreen';
 
 function NotesScreen({navigation}) {
   const [entry, setEntry] = React.useState('');
@@ -38,7 +38,7 @@ function NotesScreen({navigation}) {
     try {
       await firebase
         .database()
-        .ref('medicalrecords/' + user.uid)
+        .ref('notes/' + user.uid)
         .once('value', function(snapshot) {
           if (snapshot.val() === null) {
             setRecords([]);
@@ -51,10 +51,6 @@ function NotesScreen({navigation}) {
     }
   }
 
-  useEffect(() => {
-    show();
-  }, []);
-
   function mapToJson(records) {
     let json = [];
     for (i = 0; i < records.length; i++) {
@@ -66,7 +62,6 @@ function NotesScreen({navigation}) {
       json[i].title = records[i];
       json[i].id = uuidv4();
     }
-    console.log(json);
     return json;
   }
 
@@ -104,12 +99,16 @@ function NotesScreen({navigation}) {
           removed = removed.map(item => item['title']);
           firebase
             .database()
-            .ref('medicalrecords/' + user.uid)
+            .ref('notes/' + user.uid)
             .set(removed);
         },
       },
     ]);
   }
+
+  useEffect(() => {
+    show();
+  }, []);
 
   return (
     <KeyboardAvoidingView

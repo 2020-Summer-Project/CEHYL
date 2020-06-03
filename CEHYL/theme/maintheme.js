@@ -41,8 +41,13 @@ const textInput = {
 
 const header = {
   fontSize: 32,
+  color: '#FFFFFF',
   fontWeight: 'bold',
-}
+  textAlign: 'center',
+  alignContent: 'center',
+  marginTop: '30%',
+  padding: '4%',
+};
 
 export const MyTheme = {
   dark: false,
@@ -51,5 +56,5 @@ export const MyTheme = {
   buttonText: buttonText,
   container: container,
   textInput: textInput,
-  header: header
+  header: header,
 };
