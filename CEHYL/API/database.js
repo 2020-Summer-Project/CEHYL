@@ -9,11 +9,21 @@ async function writeData(ref, data) {
 }
 
 export async function addPost(title, description) {
-  var userId = firebase.auth().currentUser.uid;
-  const timestamp = getCurrentTimestamp();
-  var ref = 'post/' + userId + '/' + timestamp;
-  var postInfo = {timestamp: timestamp, title: title, description: description};
-  await writeData(ref, postInfo);
+  try {
+    var userId = firebase.auth().currentUser.uid;
+    const timestamp = getCurrentTimestamp();
+    var ref = 'post/' + userId + '/' + timestamp;
+    var postInfo = {
+      timestamp: timestamp,
+      title: title,
+      description: description,
+    };
+    await writeData(ref, postInfo);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 }
 
 async function deleteData(ref) {
