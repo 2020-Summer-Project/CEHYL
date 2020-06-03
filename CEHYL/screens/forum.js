@@ -29,6 +29,7 @@ function ForumHome({navigation}) {
       </TouchableOpacity>
     </View>
   );
+  d;
 }
 
 function ForumScreen() {

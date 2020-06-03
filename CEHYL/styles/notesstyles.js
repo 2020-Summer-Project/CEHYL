@@ -1,5 +1,6 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import {MyTheme} from '../theme/maintheme';
+import {AuthContext} from '../providers/authprovider';
 
 export const styles = StyleSheet.create({
   container: {
@@ -27,10 +28,16 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 15,
     marginTop: 10,
-    marginBottom: 100,
+    marginBottom: Dimensions.get('window').height * 0.2,
   },
   buttonText: {
     textAlign: 'center',
     color: MyTheme.colors.text,
+  },
+  header: {
+    textAlign: 'center',
+    color: '#FFF',
+    padding: '2%',
+    fontSize: 22,
   },
 });
