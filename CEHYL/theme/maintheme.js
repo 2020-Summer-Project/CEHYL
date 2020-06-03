@@ -22,6 +22,7 @@ const buttonText = {
 };
 
 const container = {
+  flex: 1,
   alignItems: 'center',
   justifyContent: 'center',
   width: '100%',
@@ -45,7 +46,7 @@ const header = {
   fontSize: 32,
   fontWeight: 'bold',
   color: 'white',
-}
+};
 
 export const MyTheme = {
   dark: false,
