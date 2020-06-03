@@ -43,7 +43,7 @@ function NotesScreen({navigation}) {
           if (snapshot.val() === null) {
             setRecords([]);
           } else {
-            setRecords(mapToJson(snapshot.val()));
+            setRecords(mapToJson(snapshot.val().entry));
           }
         });
     } catch (error) {
