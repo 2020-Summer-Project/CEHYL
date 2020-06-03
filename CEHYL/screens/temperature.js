@@ -58,9 +58,11 @@ export default function TemperatureScreen({navigation}) {
   };
 
   const validTemperatureDecimalPoint = () => {
-    const splitTemperature = temperature.split('.');
-    if (splitTemperature[1].length > 1) {
-      return false;
+    if (temperature.includes('.')) {
+      const splitTemperature = temperature.split('.');
+      if (splitTemperature[1].length > 1) {
+        return false;
+      }
     }
     return true;
   };
@@ -250,7 +252,12 @@ export default function TemperatureScreen({navigation}) {
                   <Text>{formatDisplayDate(item.date)}</Text>
                 </View>
                 <View style={styles.cardViewRight}>
-                  <Text>{item.temperature}</Text>
+                  <Text
+                    style={{
+                      color: 'black',
+                    }}>
+                    {item.temperature}
+                  </Text>
                 </View>
                 <TouchableOpacity
                   style={{
