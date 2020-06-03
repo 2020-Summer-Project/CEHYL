@@ -32,7 +32,6 @@ const container = {
 
 const textInput = {
   backgroundColor: colors.background,
-  placeholderTextColor: 'white',
   textAlign: 'center',
   borderColor: colors.card,
   borderWidth: 2,
@@ -45,9 +44,24 @@ const textInput = {
 
 const header = {
   fontSize: 32,
+  color: '#FFFFFF',
   fontWeight: 'bold',
+  textAlign: 'center',
+  alignContent: 'center',
+  marginTop: '30%',
+  padding: '4%',
   color: 'white',
 };
+
+const headerWithNoMargin = {
+  fontSize: 32,
+  color: '#FFFFFF',
+  fontWeight: 'bold',
+  textAlign: 'center',
+  alignContent: 'center',
+  padding: '4%',
+  color: 'white',
+}
 
 export const MyTheme = {
   dark: false,
@@ -57,5 +71,5 @@ export const MyTheme = {
   container: container,
   textInput: textInput,
   header: header,
-  textColor: colors.textColor,
+  headerWithNoMargin: headerWithNoMargin,
 };

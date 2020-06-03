@@ -35,5 +35,5 @@ export const styles = StyleSheet.create({
   textStyle: {
     textAlign: 'center',
   },
-  header: {...MyTheme.header, color: 'white'},
+  header: {...MyTheme.headerWithNoMargin, color: 'white'},
 });
