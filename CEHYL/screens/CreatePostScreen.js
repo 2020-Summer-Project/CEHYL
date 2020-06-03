@@ -170,7 +170,9 @@ export default function CreatePostScreen({navigation}) {
         <Text style={buttonText}>Submit</Text>
       </TouchableOpacity>
 
-      <Text style={{...header, ...styles.title}}>Your Posts</Text>
+      {data.length !== 0 && (
+        <Text style={{...header, ...styles.title}}>Your Posts</Text>
+      )}
       <FlatList
         data={data}
         contentContainerStyle={styles.flatlist}
