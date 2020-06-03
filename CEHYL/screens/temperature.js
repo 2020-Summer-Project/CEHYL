@@ -48,9 +48,11 @@ export default function TemperatureScreen({ navigation }) {
     }
 
     const validTemperatureDecimalPoint = () => {
-        const splitTemperature = temperature.split('.')
-        if (splitTemperature[1].length > 1) {
-            return false
+        if (temperature.includes(".")) {
+            const splitTemperature = temperature.split('.')
+            if (splitTemperature[1].length > 1) {
+                return false
+            }
         }
         return true
     }
