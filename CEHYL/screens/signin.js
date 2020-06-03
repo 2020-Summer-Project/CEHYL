@@ -8,7 +8,7 @@ function SignInScreen({navigation}) {
   const [password, setPassword] = React.useState('');
 
   const {signIn} = React.useContext(AuthContext);
-  const {button, textInput, buttonText, container} = useTheme();
+  const {button, textInput, buttonText, container, colors} = useTheme();
   return (
     <View style={container}>
       <TextInput
@@ -17,7 +17,7 @@ function SignInScreen({navigation}) {
         value={email}
         onChangeText={setEmail}
         textContentType="emailAddress"
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       <TextInput
         style={textInput}
@@ -25,7 +25,7 @@ function SignInScreen({navigation}) {
         value={password}
         onChangeText={setPassword}
         textContentType="password"
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
         secureTextEntry
       />
       <TouchableOpacity

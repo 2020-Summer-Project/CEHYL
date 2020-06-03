@@ -8,10 +8,10 @@ function ProfileScreen({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [name, setName] = React.useState('');
-  const [age, setAge] = React.useState('0');
+  const [age, setAge] = React.useState("");
   const [gender, setGender] = React.useState('');
   const [editable, setFields] = React.useState(false);
-  const {button, textInput, buttonText, container} = useTheme();
+  const {button, textInput, buttonText, container, colors} = useTheme();
 
   function defaultProfile() {
     try {
@@ -61,7 +61,7 @@ function ProfileScreen({navigation}) {
         value={email}
         onChangeText={setEmail}
         textContentType="emailAddress"
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       {editable && (
         <TextInput
@@ -71,7 +71,7 @@ function ProfileScreen({navigation}) {
           value={password}
           onChangeText={setPassword}
           textContentType="password"
-          placeholderTextColor="white"
+          placeholderTextColor={colors.textColor}
           secureTextEntry
         />
       )}
@@ -82,7 +82,7 @@ function ProfileScreen({navigation}) {
         value={name}
         onChangeText={setName}
         textContentType="name"
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       <TextInput
         style={textInput}
@@ -90,7 +90,7 @@ function ProfileScreen({navigation}) {
         placeholder="Age"
         value={age}
         onChangeText={setAge}
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
         keyboardType="numeric"
       />
       <TextInput
@@ -99,7 +99,7 @@ function ProfileScreen({navigation}) {
         placeholder="Gender"
         value={gender}
         onChangeText={setGender}
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       {editable ? (
         <TouchableOpacity
