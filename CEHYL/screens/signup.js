@@ -11,7 +11,7 @@ function SignUpScreen() {
   const [gender, setGender] = React.useState('');
   const {signUp} = React.useContext(AuthContext);
 
-  const {button, textInput, buttonText, container} = useTheme();
+  const {button, textInput, buttonText, container, colors} = useTheme();
 
   return (
     <ScrollView contentContainerStyle={container}>
@@ -20,14 +20,14 @@ function SignUpScreen() {
         style={textInput}
         value={name}
         onChangeText={setName}
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       <TextInput
         placeholder="Gender"
         style={textInput}
         value={gender}
         onChangeText={setGender}
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       <TextInput
         placeholder="Age"
@@ -35,21 +35,21 @@ function SignUpScreen() {
         value={age}
         onChangeText={setAge}
         keyboardType={'number-pad'}
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       <TextInput
         placeholder="Email"
         style={textInput}
         value={email}
         onChangeText={setEmail}
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       <TextInput
         placeholder="Password"
         style={textInput}
         value={password}
         onChangeText={setPassword}
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
         secureTextEntry
       />
       <TouchableOpacity

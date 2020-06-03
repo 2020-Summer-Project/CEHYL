@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Text,
-  Button,
   View,
   TextInput,
   Alert,
@@ -13,7 +12,7 @@ import {useTheme} from '@react-navigation/native';
 function ResetPasswordScreen({navigation}) {
   const [email, setEmail] = React.useState('');
 
-  const {button, textInput, buttonText, container} = useTheme();
+  const {button, textInput, buttonText, container, colors} = useTheme();
 
   var auth = firebase.auth();
 
@@ -32,7 +31,7 @@ function ResetPasswordScreen({navigation}) {
     <View style={container}>
       <TextInput
         placeholder="Email"
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
         value={email}
         style={textInput}
         onChangeText={setEmail}
