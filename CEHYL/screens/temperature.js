@@ -10,8 +10,8 @@ import {v4 as uuidv4} from 'uuid';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function TemperatureScreen({ navigation }) {
+    const { header, textInput } = useTheme();
     const [temperature, setTemperature] = useState('');
-    const {header, button } = useTheme();
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
@@ -20,14 +20,14 @@ export default function TemperatureScreen({ navigation }) {
     const user = firebase.auth().currentUser;
 
     const addTemperature = () => {
-        if (isNaN(temperature)) {
+        if (isNaN(temperature) || temperature.length === 0) {
             return Alert.alert('Not a number')
         }
-        console.log(temperature)
         addTemperatureToDatabase()
 
         setTemperature('')
         setDate(new Date())
+        return Alert.alert('Temperature added')
     }
 
     const addTemperatureToDatabase = () => {
@@ -95,6 +95,21 @@ export default function TemperatureScreen({ navigation }) {
         return result
     }
 
+    const formatHour = (time) => {
+        const splitTime = time.split(/:/)
+        console.log(splitTime);
+        if (splitTime[0].length === 2) {    
+            return time
+        }
+        return '0' + splitTime[0] + ':' + splitTime[1]
+    }
+
+    const formatDisplayDate = (dataDate) => {
+        const regexToSplit = /-| /
+        const splitDate = dataDate.split(regexToSplit)
+        return splitDate[2] + '-' + splitDate[1] + '-' + splitDate[0] + ' ' + formatHour(splitDate[3])
+    }
+
     useEffect(() =>{
         try {
             const listener = firebase.database().ref('temperature/' + user.uid)
@@ -109,49 +124,59 @@ export default function TemperatureScreen({ navigation }) {
     }, [])
 
     return(
-        <View style={styles.container}>
-            <Text style={header}>Temperature Screen</Text>
+        <View style={styles.screenView}>
+            <View style={styles.container}>
+                <Text style={header}>Temperature Record</Text>
 
-            <View style={styles.row}>
-                <TouchableOpacity style={button} onPress={showDatepicker}>
-                    <Text style={styles.textCenter}>{formatDate(date.getDate().toString()) + "/" + formatDate((date.getMonth() + 1).toString()) + "/" + date.getFullYear()}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={button} onPress={showTimepicker}>
-                    <Text style={styles.textCenter}>{date.getHours() + ":" + formatMinutes(date.getMinutes().toString())}</Text>
-                </TouchableOpacity>
-            </View>            
+                <View style={styles.row}>
+                    <TouchableOpacity style={styles.button} onPress={showDatepicker}>
+                        <Text style={styles.textCenter}>{formatDate(date.getDate().toString()) + "/" + formatDate((date.getMonth() + 1).toString()) + "/" + date.getFullYear()}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={showTimepicker}>
+                        <Text style={styles.textCenter}>{date.getHours() + ":" + formatMinutes(date.getMinutes().toString())}</Text>
+                    </TouchableOpacity>
+                </View>            
 
-            {show && ( 
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  timeZoneOffsetInMinutes={0}
-                  value={date}
-                  mode={mode}
-                  is24Hour={true}
-                  display="default"
-                  onChange={onChange}
-                />
-            )}
-            <View style={styles.row}>
-                <TextInput 
-                    keyboardType='numeric' style={styles.textInput} 
-                    placeholder="Your temperature here"
-                    onChangeText={setTemperature}
-                    value={temperature}
-                />
-                <TouchableOpacity onPress={() => {
-                        addTemperature(temperature)
-                    }}>
-                    <Image source={require('../images/baseline_add_black_18dp.png')} style={styles.addIcon}/>                        
-                </TouchableOpacity>
+                {show && ( 
+                    <DateTimePicker
+                    testID="dateTimePicker"
+                    timeZoneOffsetInMinutes={0}
+                    value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                    />
+                )}
+                <View style={styles.row}>
+                    <TextInput 
+                        keyboardType='numeric' 
+                        style={textInput} 
+                        placeholder="Your temperature here"
+                        onChangeText={setTemperature}
+                        value={temperature}
+                    />
+                    <TouchableOpacity onPress={() => {
+                            addTemperature(temperature)
+                        }}>
+                        <Image source={require('../images/baseline_add_white_18dp.png')} style={styles.addIcon}/>                        
+                    </TouchableOpacity>
+                </View>
             </View>
             <View>
+                <View style={styles.headerStyle}>
+                    <Text style={styles.headerDate}>Date Time</Text>
+                    <Text style={styles.headerTemp}>Temperature</Text>
+                </View>
                 <FlatList
+                    style={styles.flatList}
                     data={listOfTemperature}
                     renderItem={({item}) => (
-                        <Card>
-                            <View style={styles.row}>
-                                <Text>{item.date}</Text>
+                        <Card style={styles.card}>
+                            <View style={styles.cardViewLeft}>
+                                <Text>{formatDisplayDate(item.date)}</Text>
+                            </View>
+                            <View style={styles.cardViewRight}> 
                                 <Text>{item.temperature}</Text>
                             </View>
                         </Card>
