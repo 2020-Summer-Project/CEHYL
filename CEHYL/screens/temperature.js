@@ -178,6 +178,7 @@ export default function TemperatureScreen({ navigation }) {
                         keyboardType='numeric' 
                         style={textInput} 
                         placeholder="Your temperature here"
+                        placeholderTextColor="white"
                         onChangeText={setTemperature}
                         value={temperature}
                     />

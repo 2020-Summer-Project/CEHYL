@@ -31,7 +31,6 @@ const container = {
 
 const textInput = {
   backgroundColor: colors.background,
-  placeholderTextColor: 'white',
   textAlign: 'center',
   borderColor: colors.card,
   borderWidth: 2,
