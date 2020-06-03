@@ -5,8 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  Card,
-  CardItem,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {AuthContext} from '../providers/authprovider';
 import {useTheme} from '@react-navigation/native';
@@ -14,6 +13,7 @@ import firebase from '../Firebase';
 import {v4 as uuidv4} from 'uuid';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {styles} from '../styles/medicalrecordstyles';
+import Card from '../components/card';
 
 function MedicalRecordsScreen({navigation}) {
   const [entry, setEntry] = React.useState('');
@@ -43,7 +43,7 @@ function MedicalRecordsScreen({navigation}) {
           if (snapshot.val() === null) {
             setRecords([]);
           } else {
-            setRecords(mapToJson(snapshot.val().entry));
+            setRecords(mapToJson(snapshot.val()));
           }
         });
     } catch (error) {
@@ -86,16 +86,37 @@ function MedicalRecordsScreen({navigation}) {
     }
   }
 
+  function handleDelete(item) {
+    let removed = recordsToShow.filter(record => {
+      return record.id !== item.id;
+    });
+    setRecords(removed);
+    removed = removed.map(item => item['title']);
+    firebase
+      .database()
+      .ref('medicalrecords/' + user.uid)
+      .set(removed);
+  }
+
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      styles={styles.container}
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
       <FlatList
         nestedScrollEnabled={true}
         data={recordsToShow}
         renderItem={({item}) => (
-          <Text style={styles.container}>{item.title}</Text>
+          <Card style={styles.text}>
+            <View>
+              <TouchableOpacity onPress={() => handleDelete({item}['item'])}>
+                <Text style={styles.button}>Delete</Text>
+              </TouchableOpacity>
+              <Text>{item.title}</Text>
+            </View>
+          </Card>
         )}
       />
-
       <TextInput
         style={textInput}
         placeholder="Entry"
@@ -104,10 +125,12 @@ function MedicalRecordsScreen({navigation}) {
         textContentType="entry"
         placeholderTextColor="white"
       />
-      <TouchableOpacity style={button} onPress={() => handleSave({entry})}>
-        <Text style={buttonText}>Save</Text>
+      <TouchableOpacity
+        style={styles.inputText}
+        onPress={() => handleSave({entry})}>
+        <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
