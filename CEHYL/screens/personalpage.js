@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Text, TouchableOpacity, View} from 'react-native';
 import TemperatureScreen from './temperature';
-import MedicalRecordsScreen from './medicalrecords';
+import NotesScreen from './notes';
 import {MyTheme} from '../theme/maintheme';
 import {styles} from '../styles/personalpage';
 
@@ -22,13 +22,13 @@ function PersonalPageHomeScreen({navigation}) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.item}
-        onPress={() => navigation.navigate('MedicalRecords')}>
-        <Text>Medical Records</Text>
+        onPress={() => navigation.navigate('Notes')}>
+        <Text>Notes</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.item}
         onPress={() => navigation.navigate('Temperature')}>
-        <Text>Notes</Text>
+        <Text>Temperature</Text>
       </TouchableOpacity>
     </View>
   );
@@ -52,11 +52,7 @@ function PersonalPageScreen() {
         component={TemperatureScreen}
       />
       <PersonalPageStack.Screen name="Diet" component={TemperatureScreen} />
-      <PersonalPageStack.Screen
-        name="MedicalRecords"
-        component={MedicalRecordsScreen}
-      />
-      <PersonalPageStack.Screen name="Notes" component={TemperatureScreen} />
+      <PersonalPageStack.Screen name="Notes" component={NotesScreen} />
     </PersonalPageStack.Navigator>
   );
 }
