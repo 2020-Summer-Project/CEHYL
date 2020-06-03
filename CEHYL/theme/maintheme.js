@@ -1,3 +1,5 @@
+import {Dimensions} from 'react-native';
+
 const colors = {
   primary: '#1DCDFE',
   background: '#2F455C',
@@ -22,11 +24,10 @@ const buttonText = {
 };
 
 const container = {
-  flex: 1,
   alignItems: 'center',
   justifyContent: 'center',
-  width: '100%',
-  height: '100%',
+  paddingTop: '30%',
+  paddingBottom: '10%',
 };
 
 const textInput = {

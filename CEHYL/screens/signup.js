@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Button, View, TextInput, TouchableOpacity} from 'react-native';
+import {Text, ScrollView, TextInput, TouchableOpacity} from 'react-native';
 import {AuthContext} from '../providers/authprovider';
 import {useTheme} from '@react-navigation/native';
 
@@ -14,7 +14,7 @@ function SignUpScreen() {
   const {button, textInput, buttonText, container, colors} = useTheme();
 
   return (
-    <View style={container}>
+    <ScrollView contentContainerStyle={container}>
       <TextInput
         placeholder="Full Name"
         style={textInput}
@@ -57,7 +57,7 @@ function SignUpScreen() {
         onPress={() => signUp({email, password, age, gender, name})}>
         <Text style={buttonText}>Sign Up</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
