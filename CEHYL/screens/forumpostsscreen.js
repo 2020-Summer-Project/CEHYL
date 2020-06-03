@@ -13,7 +13,7 @@ import {getAllPosts} from '../API/database';
 import moment from 'moment';
 
 export default function ForumPostsScreen({navigation}) {
-  const { container, headerWithNoMargin } = useTheme();
+  const {container, headerWithNoMargin} = useTheme();
   const [data, setData] = useState([]);
   const [isRefreshing, setLoading] = useState(false);
 
@@ -21,17 +21,28 @@ export default function ForumPostsScreen({navigation}) {
     title: {
       color: 'white',
     },
+    timestamp: {
+      flex: 1,
+      fontSize: 18,
+      textAlign: 'right',
+    },
     postTitleContainer: {
       flexDirection: 'row',
-      flexWrap: 'wrap',
       justifyContent: 'space-between',
     },
     postTitle: {
       fontSize: 22,
+      flex: 2,
+      flexWrap: 'wrap',
+      width: '80%',
+    },
+    postDescription: {
+      flexWrap: 'wrap',
+      flex: 1,
+      fontSize: 17,
     },
     descriptionContainer: {
       marginTop: 10,
-      flexWrap: 'wrap',
     },
     post: {
       flexDirection: 'column',
@@ -101,10 +112,10 @@ export default function ForumPostsScreen({navigation}) {
           <Card style={styles.post}>
             <View style={styles.postTitleContainer}>
               <Text style={styles.postTitle}>{item.title}</Text>
-              <Text>{item.timestamp}</Text>
+              <Text style={styles.timestamp}>{item.timestamp}</Text>
             </View>
             <View style={styles.descriptionContainer}>
-              <Text>{item.description}</Text>
+              <Text style={styles.postDescription}>{item.description}</Text>
             </View>
           </Card>
         )}
