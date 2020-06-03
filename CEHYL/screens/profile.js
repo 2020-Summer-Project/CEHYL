@@ -59,7 +59,7 @@ function ProfileScreen({navigation}) {
   useEffect(() => defaultProfile(), []);
 
   return (
-    <ScrollView contentContainerStyle={container}>
+    <ScrollView contentContainerStyle={{...container, paddingTop: 0}}>
       <Text style={headerWithNoMargin}>Profile</Text>
       <TextInput
         style={textInput}
