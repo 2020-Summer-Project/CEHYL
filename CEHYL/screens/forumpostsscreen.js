@@ -13,7 +13,7 @@ import {getAllPosts} from '../API/database';
 import moment from 'moment';
 
 export default function ForumPostsScreen({navigation}) {
-  const {button, buttonText, container, header, textInput, colors} = useTheme();
+  const { container, headerWithNoMargin } = useTheme();
   const [data, setData] = useState([]);
   const [isRefreshing, setLoading] = useState(false);
 
@@ -91,8 +91,8 @@ export default function ForumPostsScreen({navigation}) {
   }, []);
 
   return (
-    <View style={container}>
-      <Text style={{...header, ...styles.title}}>Posts</Text>
+    <View style={{...container, paddingTop: 0}}>
+      <Text style={{...headerWithNoMargin, ...styles.title}}>Posts</Text>
       <FlatList
         data={data}
         onRefresh={updatePostList}

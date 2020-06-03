@@ -1,5 +1,11 @@
 import React from 'react';
-import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import {AuthContext} from '../providers/authprovider';
 import {useTheme} from '@react-navigation/native';
 
@@ -8,16 +14,16 @@ function SignInScreen({navigation}) {
   const [password, setPassword] = React.useState('');
 
   const {signIn} = React.useContext(AuthContext);
-  const {button, textInput, buttonText, container} = useTheme();
+  const {button, textInput, buttonText, container, colors} = useTheme();
   return (
-    <View style={container}>
+    <ScrollView contentContainerStyle={container}>
       <TextInput
         style={textInput}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
         textContentType="emailAddress"
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       <TextInput
         style={textInput}
@@ -25,7 +31,7 @@ function SignInScreen({navigation}) {
         value={password}
         onChangeText={setPassword}
         textContentType="password"
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
         secureTextEntry
       />
       <TouchableOpacity
@@ -45,7 +51,7 @@ function SignInScreen({navigation}) {
         onPress={() => navigation.navigate('ResetPassword')}>
         <Text style={buttonText}>Reset Password</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 

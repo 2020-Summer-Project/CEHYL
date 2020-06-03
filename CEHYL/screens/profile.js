@@ -1,5 +1,11 @@
 import React, {useEffect} from 'react';
-import {TouchableOpacity, View, TextInput, Text, Alert} from 'react-native';
+import {
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+  Text,
+  Alert,
+} from 'react-native';
 import firebase from '../Firebase';
 import {useTheme} from '@react-navigation/native';
 
@@ -8,10 +14,17 @@ function ProfileScreen({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [name, setName] = React.useState('');
-  const [age, setAge] = React.useState('0');
+  const [age, setAge] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [editable, setFields] = React.useState(false);
-  const {button, textInput, buttonText, container} = useTheme();
+  const {
+    button,
+    textInput,
+    buttonText,
+    container,
+    colors,
+    headerWithNoMargin,
+  } = useTheme();
 
   function defaultProfile() {
     try {
@@ -34,7 +47,16 @@ function ProfileScreen({navigation}) {
   async function updateProfile(email, password, name, age, gender) {
     try {
       await user.updateEmail(email);
-      await user.updatePassword(password);
+      if (password === undefined) {
+        Alert.alert('Password cannot leave blank');
+        return;
+      }
+      try {
+        await user.updatePassword(password);
+      } catch (err) {
+        console.log(err);
+        Alert.alert(err.message);
+      }
       await firebase
         .database()
         .ref('users/' + user.uid)
@@ -44,16 +66,19 @@ function ProfileScreen({navigation}) {
           gender: gender,
           name: name,
         });
+      Alert.alert('Profile information has been updated!');
       setFields(false);
+      setPassword('');
     } catch (error) {
-      Alert.alert(error);
+      Alert.alert(error.message);
     }
   }
 
   useEffect(() => defaultProfile(), []);
 
   return (
-    <View style={container}>
+    <ScrollView contentContainerStyle={{...container, paddingTop: 0}}>
+      <Text style={headerWithNoMargin}>Profile</Text>
       <TextInput
         style={textInput}
         editable={editable}
@@ -61,7 +86,7 @@ function ProfileScreen({navigation}) {
         value={email}
         onChangeText={setEmail}
         textContentType="emailAddress"
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       {editable && (
         <TextInput
@@ -71,7 +96,7 @@ function ProfileScreen({navigation}) {
           value={password}
           onChangeText={setPassword}
           textContentType="password"
-          placeholderTextColor="white"
+          placeholderTextColor={colors.textColor}
           secureTextEntry
         />
       )}
@@ -82,7 +107,7 @@ function ProfileScreen({navigation}) {
         value={name}
         onChangeText={setName}
         textContentType="name"
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       <TextInput
         style={textInput}
@@ -90,7 +115,7 @@ function ProfileScreen({navigation}) {
         placeholder="Age"
         value={age}
         onChangeText={setAge}
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
         keyboardType="numeric"
       />
       <TextInput
@@ -99,7 +124,7 @@ function ProfileScreen({navigation}) {
         placeholder="Gender"
         value={gender}
         onChangeText={setGender}
-        placeholderTextColor="white"
+        placeholderTextColor={colors.textColor}
       />
       {editable ? (
         <TouchableOpacity
@@ -112,7 +137,7 @@ function ProfileScreen({navigation}) {
           <Text style={buttonText}>Edit</Text>
         </TouchableOpacity>
       )}
-    </View>
+    </ScrollView>
   );
 }
 
